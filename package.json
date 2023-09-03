@@ -5,25 +5,20 @@
     "main": "lib/api.js",
     "types": "lib/api.d.ts",
     "scripts": {
-      "unit:js": "echo \"Error: no JS test specified\" && exit 0",
-      "test": "npm run unit:js",
-      "e2e:ios": "echo \"Error: no iOS E2E test specified\" && exit 0",
-      "e2e:android": "echo \"Error: no android E2E test specified\" && exit 0",
-      "preversion": "npm test",
-      "postversion": "git add package.json package-lock.json && git commit -m \"JS Release $npm_new_version\" && git tag -a rel/js/$npm_new_version -m \"JS Release: $npm_new_version\" && git push && git push --tags"
+        "unit:js": "echo \"Error: no JS test specified\" && exit 0",
+        "test": "npm run unit:js",
+        "e2e:ios": "echo \"Error: no iOS E2E test specified\" && exit 0",
+        "e2e:android": "echo \"Error: no android E2E test specified\" && exit 0",
+        "preversion": "npm test",
+        "postversion": "git add package.json package-lock.json && git commit -m \"JS Release $npm_new_version\" && git tag -a rel/js/$npm_new_version -m \"JS Release: $npm_new_version\" && git push && git push --tags"
     },
     "author": "norman@nbsolutions.ca",
     "license": "Apache-2.0",
     "devDependencies": {
-      "@types/uuid": "9.0.2",
-      "source-map-loader": "4.0.1",
-      "ts-loader": "9.4.4",
-      "typescript": "5.2.2",
-      "webpack": "5.88.2",
-      "webpack-cli": "5.1.4"
+        "@types/uuid": "9.0.2",
+        "typescript": "^5.2.2"
     },
     "dependencies": {
-      "uuid": "9.0.0"
+        "uuid": "9.0.0"
     }
-  }
-  
+}
