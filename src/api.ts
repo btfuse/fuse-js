@@ -19,6 +19,7 @@ limitations under the License.
 export {Platform} from './Platform';
 export {PlatformResolver} from './PlatformResolver';
 export {FuseContext} from './FuseContext';
+export {Version} from './Version';
 export {
     FuseAPI,
     TFuseAPIArgs,
