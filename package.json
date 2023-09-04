@@ -1,9 +1,21 @@
 {
     "name": "@nbsfuse/core",
     "version": "0.1.0",
-    "description": "",
+    "description": "A native-first framework for building hybdrid web-native applications",
     "main": "lib/api.js",
     "types": "lib/api.d.ts",
+    "homepage": "https://github.com/nbsfuse/fuse",
+    "keywords": [
+        "NBS",
+        "NBSolutions",
+        "Fuse",
+        "NBSFuse",
+        "native",
+        "mobile",
+        "app",
+        "application",
+        "development"
+    ],
     "scripts": {
         "unit:js": "jest",
         "test": "npm run unit:js",
@@ -11,6 +23,10 @@
         "e2e:android": "echo \"Error: no android E2E test specified\" && exit 0",
         "preversion": "npm test",
         "postversion": "git push && git push --tags"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nbsfuse/fuse"
     },
     "author": "norman@nbsolutions.ca",
     "license": "Apache-2.0",
