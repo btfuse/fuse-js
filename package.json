@@ -1,6 +1,6 @@
 {
     "name": "@nbsfuse/core",
-    "version": "0.0.0-test.0",
+    "version": "0.1.0",
     "description": "",
     "main": "lib/api.js",
     "types": "lib/api.d.ts",
