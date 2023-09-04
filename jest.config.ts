@@ -3,6 +3,7 @@ import type {Config} from 'jest';
 
 export const JEST_CONFIG: Config = {
     preset: 'ts-jest',
+    testEnvironment: 'jsdom',
     verbose: true,
     testMatch: [ '**/spec/**/*.spec.ts' ],
     collectCoverageFrom: [ '**/src/**/*.ts' ],

@@ -28,7 +28,8 @@ export {
     IFuseAPICallPacket,
     FuseAPIContentType
 } from './FuseAPI';
-export {FuseSubscription} from './FuseSubscription';
+export {FuseResponseReader} from './FuseResponseReader';
+export {FuseAPIFactory} from './FuseAPIFactory';
 export {AbstractFuseAPIFactory} from './AbstractFuseAPIFactory';
 // export {FuseContentAPIFactory} from './FuseContentAPIFactory';
 export {FusePlugin} from './FusePlugin';
