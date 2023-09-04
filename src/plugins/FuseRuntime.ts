@@ -1,5 +1,6 @@
 
 import {FusePlugin} from '../FusePlugin';
+import {FuseResponseReader} from '../FuseResponseReader';
 
 export interface IRuntimeInfo {
     version: string;
@@ -11,8 +12,7 @@ export class FuseRuntime extends FusePlugin {
     }
     
     public async getInfo(): Promise<IRuntimeInfo> {
-        // TODO: Perhaps make some convenience reader methods
         let data: ArrayBuffer = await this._exec('info');
-        return JSON.parse(await new Blob([data]).text());
+        return await FuseResponseReader.readAsJSON(data);
     }
 }
