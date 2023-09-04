@@ -20,20 +20,24 @@ import { FuseAPIFactory } from './FuseAPIFactory';
 // import { FuseContentAPIFactory } from './FuseContentAPIFactory';
 import { Platform } from "./Platform";
 import { PlatformResolver } from "./PlatformResolver";
+import {FuseRuntime, IRuntimeInfo} from './plugins/FuseRuntime';
+import {Version} from './Version';
 
 /**
  * A context class that holds Fuse Framework state
  */
 export class FuseContext {
     private $platform: Platform;
-
+    private $runtime: FuseRuntime;
+    private $runtimeVersion: Version;
     private $fuseAPIFactory: AbstractFuseAPIFactory;
 
     public constructor() {
         let presolver: PlatformResolver = this._createPlatformResolver();
         this.$platform = presolver.resolve();
-
+        this.$runtimeVersion = null;
         this.$fuseAPIFactory = this._createFuseAPIFactory();
+        this.$runtime = new FuseRuntime(this);
     }
 
     public getAPIFactory(): AbstractFuseAPIFactory {
@@ -50,5 +54,14 @@ export class FuseContext {
 
     public getPlatform(): Platform {
         return this.$platform;
+    }
+
+    public async getPlatformVersion(): Promise<Version> {
+        if (!this.$runtimeVersion) {
+            let info: IRuntimeInfo = await this.$runtime.getInfo();
+            this.$runtimeVersion = Version.parseVersionString(info.version);
+        }
+        
+        return this.$runtimeVersion;
     }
 }
