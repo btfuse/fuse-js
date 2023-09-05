@@ -25,9 +25,9 @@ export {
     TFuseAPIArgs,
     TFuseAPISupportedArgPrimitives,
     TFuseAPIResponseData,
-    IFuseAPICallPacket,
-    FuseAPIContentType
+    IFuseAPICallPacket
 } from './FuseAPI';
+export {ContentType} from './ContentType';
 export {FuseResponseReader} from './FuseResponseReader';
 export {FuseAPIFactory} from './FuseAPIFactory';
 export {AbstractFuseAPIFactory} from './AbstractFuseAPIFactory';

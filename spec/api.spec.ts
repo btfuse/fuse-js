@@ -26,10 +26,15 @@ import {HTTPFuseAPI} from '../src/HTTPFuseAPI';
 import {Platform} from '../src/Platform';
 import {PlatformResolver} from '../src/PlatformResolver';
 import {Version} from '../src/Version';
+import {ContentType} from '../src/ContentType';
 
 describe('Public API', () => {
     it('AbstractFuseAPIFactory', () => {
         expect(api.AbstractFuseAPIFactory).toBe(AbstractFuseAPIFactory);
+    });
+
+    it('ContentType', () => {
+        expect(api.ContentType).toBe(ContentType);
     });
 
     it('FuseAPI', () => {

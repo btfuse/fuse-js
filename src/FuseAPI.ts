@@ -42,17 +42,11 @@ export interface TFuseAPIResponseData {
     data?: TFuseAPIArgs
 }
 
-export enum FuseAPIContentType {
-    STRING,
-    BINARY,
-    JSON
-}
-
 export interface IFuseAPICallPacket {
     route: string;
     callbackID: string;
     body: TFuseAPIArgs;
-    contentType: FuseAPIContentType;
+    contentType: string;
 }
 
 export type TFuseAPICallbackHandler = (data: string) => void;
@@ -77,13 +71,13 @@ export abstract class FuseAPI {
      * @param method 
      * @param args 
      */
-    protected abstract _execute(pluginID: string, method: string, contentType: FuseAPIContentType, args: TFuseAPIArgs): Promise<ArrayBuffer>;
+    protected abstract _execute(pluginID: string, method: string, contentType: string, args: TFuseAPIArgs): Promise<ArrayBuffer>;
 
     protected _createRoute(pluginID: string, method: string): string {
         return `/api/${pluginID}/${method}`;
     }
 
-    public async execute(pluginID: string, method: string, contentType: FuseAPIContentType, args: TFuseAPIArgs): Promise<ArrayBuffer> {
+    public async execute(pluginID: string, method: string, contentType: string, args: TFuseAPIArgs): Promise<ArrayBuffer> {
         return this._execute(pluginID, method, contentType, args);
     }
 

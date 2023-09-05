@@ -15,7 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import { FuseAPI, FuseAPIContentType, TFuseAPIArgs, TFuseAPICallbackHandler } from "./FuseAPI";
+import { FuseAPI, TFuseAPIArgs, TFuseAPICallbackHandler } from "./FuseAPI";
 import { FuseContext } from "./FuseContext";
 import { Platform } from "./Platform";
 
@@ -103,11 +103,12 @@ export abstract class FusePlugin {
      * 
      * The concrete class should expose public methods with type information exposed.
      * 
-     * @param method 
-     * @param args 
-     * @returns 
+     * @param method The method link, this should match the endpoint defined in the native API.
+     * @param contentType the MIME type of the data you are passing in.
+     * @param data - The data to pass to the native environment
+     * @returns {ArrayBuffer} The response body from native. FuseResponseReader has some utility methods to read the data in common formats (e.g. text or JSON)
      */
-    protected async _exec(method: string, contentType?: FuseAPIContentType, args?: TFuseAPIArgs): Promise<ArrayBuffer> {
-        return this.$api.execute(this.getID(), method, contentType, args);
+    protected async _exec(method: string, contentType?: string, data?: TFuseAPIArgs): Promise<ArrayBuffer> {
+        return this.$api.execute(this.getID(), method, contentType, data);
     }
 }

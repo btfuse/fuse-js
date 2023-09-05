@@ -15,7 +15,8 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {FuseAPI, FuseAPIContentType, TFuseAPIArgs} from './FuseAPI';
+import { ContentType } from './ContentType';
+import {FuseAPI, TFuseAPIArgs} from './FuseAPI';
 
 /**
  * A Fuse API implementation that uses HTTP protocol to make native calls
@@ -28,22 +29,18 @@ export class HTTPFuseAPI extends FuseAPI {
 
     protected _initHeaders(xhr: XMLHttpRequest): void {};
 
-    protected override _execute(pluginID: string, method: string, contentType: FuseAPIContentType, args: TFuseAPIArgs): Promise<ArrayBuffer> {
+    protected override _execute(pluginID: string, method: string, contentType: string, args: TFuseAPIArgs): Promise<ArrayBuffer> {
         return new Promise<ArrayBuffer>((resolve, reject) => {
             let xhr: XMLHttpRequest = new XMLHttpRequest();
             xhr.responseType = 'arraybuffer';
             xhr.open('POST', `${this._getEndpoint()}${this._createRoute(pluginID, method)}`);
-            
-            switch (contentType) {
-                case FuseAPIContentType.BINARY:
-                    xhr.setRequestHeader('Content-Type', 'application/octet-stream');
-                    break;
-                case FuseAPIContentType.JSON:
-                    xhr.setRequestHeader('Content-Type', 'application/json');
-                    break;
-                case FuseAPIContentType.STRING:
-                    xhr.setRequestHeader('Content-Type', 'text/plain');
-                    break;
+
+            if (!contentType) {
+                contentType = ContentType.BINARY;
+            }
+
+            if (contentType) {
+                xhr.setRequestHeader('Content-Type', contentType);
             }
 
             this._initHeaders(xhr);
