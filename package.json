@@ -17,6 +17,7 @@
         "development"
     ],
     "scripts": {
+	"build": "tsc",
         "unit:js": "jest",
         "test": "npm run unit:js",
         "e2e:ios": "echo \"Error: no iOS E2E test specified\" && exit 0",
