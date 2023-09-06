@@ -1,6 +1,6 @@
 {
     "name": "@nbsfuse/core",
-    "version": "0.1.2",
+    "version": "0.2.0",
     "description": "A native-first framework for building hybdrid web-native applications",
     "main": "lib/api.js",
     "types": "lib/api.d.ts",
@@ -17,7 +17,7 @@
         "development"
     ],
     "scripts": {
-	"build": "tsc",
+        "build": "tsc",
         "unit:js": "jest",
         "test": "npm run unit:js",
         "e2e:ios": "echo \"Error: no iOS E2E test specified\" && exit 0",
