@@ -31,18 +31,17 @@ export {ContentType} from './ContentType';
 export {FuseResponseReader} from './FuseResponseReader';
 export {FuseAPIFactory} from './FuseAPIFactory';
 export {AbstractFuseAPIFactory} from './AbstractFuseAPIFactory';
-// export {FuseContentAPIFactory} from './FuseContentAPIFactory';
+export {
+    FuseRuntime,
+    TPauseCallbackHandler,
+    TResumeCallbackHandler,
+    IRuntimeInfo
+} from './plugins/FuseRuntime';
 export {FusePlugin} from './FusePlugin';
-// export {FuseContentAPI, TFuseAPICallbackHandler} from './FuseContentAPI';
 export {HTTPFuseAPI} from './HTTPFuseAPI';
 
 // iOS Specific APIs / Implementations
 export {IOSSchemeFuseAPI} from './ios/IOSSchemeFuseAPI';
 
 // Android Specific APIs / Implementations
-// export {AndroidContentFuseAPI} from './android/AndroidContentFuseAPI';
 export {AndroidSchemeFuseAPI} from './android/AndroidSchemeFuseAPI';
-
-// Experimental
-// export {FuseSchemeAPIFactory} from './FuseSchemeAPIFactory';
-// export {IOSSchemeFuseAPI} from './ios/IOSSchemeFuseAPI';

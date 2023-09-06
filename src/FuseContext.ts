@@ -20,7 +20,12 @@ import { FuseAPIFactory } from './FuseAPIFactory';
 // import { FuseContentAPIFactory } from './FuseContentAPIFactory';
 import { Platform } from "./Platform";
 import { PlatformResolver } from "./PlatformResolver";
-import {FuseRuntime, IRuntimeInfo} from './plugins/FuseRuntime';
+import {
+    FuseRuntime,
+    IRuntimeInfo,
+    TPauseCallbackHandler,
+    TResumeCallbackHandler
+} from './plugins/FuseRuntime';
 import {Version} from './Version';
 
 /**
@@ -63,5 +68,21 @@ export class FuseContext {
         }
         
         return this.$runtimeVersion;
+    }
+
+    public async registerPauseHandler(callback: TPauseCallbackHandler): Promise<string> {
+        return await this.$runtime.registerPauseHandler(callback);
+    }
+
+    public async unregisterPauseHandler(callbackID: string): Promise<void> {
+        return await this.$runtime.unregisterPauseHandler(callbackID);
+    }
+
+    public async registerResumeHandler(callback: TResumeCallbackHandler): Promise<string> {
+        return await this.$runtime.registerResumeHandler(callback);
+    }
+
+    public async unregisterResumeHandler(callbackID: string): Promise<void> {
+        return await this.$runtime.unregisterResumeHandler(callbackID);
     }
 }

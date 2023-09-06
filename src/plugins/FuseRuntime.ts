@@ -20,6 +20,9 @@ import { FuseContext } from '../FuseContext';
 import {FusePlugin} from '../FusePlugin';
 import {FuseResponseReader} from '../FuseResponseReader';
 
+export type TPauseCallbackHandler = () => void;
+export type TResumeCallbackHandler = () => void;
+
 export interface IRuntimeInfo {
     version: string;
 }
@@ -41,33 +44,33 @@ export class FuseRuntime extends FusePlugin {
         return await FuseResponseReader.readAsJSON(data);
     }
 
-    public async registerPauseListener(cb: () => void): Promise<string> {
+    public async registerPauseHandler(cb: TPauseCallbackHandler): Promise<string> {
         let cbID: string = this._createCallback((payload: string) => {
             cb();
         });
 
-        await this._exec('registerPauseListener', ContentType.TEXT, cbID);
+        await this._exec('registerPauseHandler', ContentType.TEXT, cbID);
         this.$callbackIDs.push(cbID);
 
         return cbID;
     }
 
-    public async unregisterPauseListener(callbackID: string): Promise<void> {
-        await this._exec('unregisterPauseListener', ContentType.TEXT, callbackID);
+    public async unregisterPauseHandler(callbackID: string): Promise<void> {
+        await this._exec('unregisterPauseHandler', ContentType.TEXT, callbackID);
     }
 
-    public async registerResumeListener(cb: () => void): Promise<string> {
+    public async registerResumeHandler(cb: TResumeCallbackHandler): Promise<string> {
         let cbID: string = this._createCallback((payload: string) => {
             cb();
         });
 
-        await this._exec('registerResumeListener', ContentType.TEXT, cbID);
+        await this._exec('registerResumeHandler', ContentType.TEXT, cbID);
         this.$callbackIDs.push(cbID);
 
         return cbID;
     }
 
-    public async unregisterResumeListener(callbackID: string): Promise<void> {
-        await this._exec('unregisterResumeListener', ContentType.TEXT, callbackID);
+    public async unregisterResumeHandler(callbackID: string): Promise<void> {
+        await this._exec('unregisterResumeHandler', ContentType.TEXT, callbackID);
     }
 }
