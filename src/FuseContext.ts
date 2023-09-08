@@ -35,18 +35,18 @@ export class FuseContext {
     private $platform: Platform;
     private $runtime: FuseRuntime;
     private $runtimeVersion: Version;
-    private $fuseAPIFactory: AbstractFuseAPIFactory;
+    private $defaultAPIFactory: AbstractFuseAPIFactory;
 
     public constructor() {
         let presolver: PlatformResolver = this._createPlatformResolver();
         this.$platform = presolver.resolve();
         this.$runtimeVersion = null;
-        this.$fuseAPIFactory = this._createFuseAPIFactory();
+        this.$defaultAPIFactory = this._createFuseAPIFactory();
         this.$runtime = new FuseRuntime(this);
     }
 
-    public getAPIFactory(): AbstractFuseAPIFactory {
-        return this.$fuseAPIFactory;
+    public getDefaultAPIFactory(): AbstractFuseAPIFactory {
+        return this.$defaultAPIFactory;
     }
 
     protected _createFuseAPIFactory(): AbstractFuseAPIFactory {

@@ -25,11 +25,37 @@ import { AndroidSchemeFuseAPI } from './android/AndroidSchemeFuseAPI';
  * A FuseAPI factory that uses the HTTP/app scheme as the bridge.
  */
 export class FuseAPIFactory extends AbstractFuseAPIFactory {
+    
+    private $iosScheme: FuseAPI;
+    private $androidScheme: FuseAPI;
+
+    public constructor() {
+        super();
+
+        // Realistically there will only be one or the other set.
+        this.$iosScheme = null;
+        this.$androidScheme = null;
+    }
+
     public override create(platform: Platform): FuseAPI {
         switch (platform) {
-            case Platform.IOS: return new IOSSchemeFuseAPI();
-            case Platform.ANDROID: return new AndroidSchemeFuseAPI();
+            case Platform.IOS: return this.$createIOSScheme();
+            case Platform.ANDROID: return this.$createAndroidScheme();
             default: throw new Error('Unsupported platform: ' + platform);
         }
+    }
+
+    private $createIOSScheme(): FuseAPI {
+        if (!this.$iosScheme) {
+            this.$iosScheme = new IOSSchemeFuseAPI();
+        }
+        return this.$iosScheme;
+    }
+
+    private $createAndroidScheme(): FuseAPI {
+        if (!this.$androidScheme) {
+            this.$androidScheme = new AndroidSchemeFuseAPI();
+        }
+        return this.$androidScheme;
     }
 }

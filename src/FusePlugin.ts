@@ -15,6 +15,7 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { AbstractFuseAPIFactory } from "./AbstractFuseAPIFactory";
 import { FuseAPI, TFuseAPIArgs, TFuseAPICallbackHandler } from "./FuseAPI";
 import { FuseContext } from "./FuseContext";
 import { Platform } from "./Platform";
@@ -22,13 +23,13 @@ import { Platform } from "./Platform";
 /**
  * Base class for Fuse Plugins
  */
-export abstract class FusePlugin {
+export abstract class FusePlugin<TAPIOpts = unknown> {
     private $context: FuseContext;
-    private $api: FuseAPI;
+    private $apiFactory: AbstractFuseAPIFactory;
 
     public constructor(context: FuseContext) {
         this.$context = context;
-        this.$api = this._createAPI(this.$context.getPlatform());
+        this.$apiFactory = this._createAPIFactory() || context.getDefaultAPIFactory();
     }
 
     /**
@@ -37,7 +38,37 @@ export abstract class FusePlugin {
      * @returns 
      */
     protected _createAPI(platform: Platform): FuseAPI {
-        return this.getContext().getAPIFactory().create(platform);
+        return this._getAPIFactory().create(platform);
+    }
+
+    protected _createAPIFactory(): AbstractFuseAPIFactory {
+        return null;
+    }
+
+    protected _getAPIFactory(): AbstractFuseAPIFactory {
+        return this.$apiFactory;
+    }
+
+    /**
+     * TAPIOpts is a plugin generic type declaring options.
+     * User may use this to declare a path on how to get a particular FuseAPI.
+     * 
+     * This API may be overridden by subclasses to utilise the given options.
+     * The default implementation is to simply return a standard FuseAPI.
+     * 
+     * @param opts 
+     * @returns 
+     */
+    protected _getAPI(opts?: TAPIOpts): FuseAPI {
+        return this.$getAPI();
+    }
+
+    /**
+     * Returns a standard FuseAPI
+     * @returns 
+     */
+    private $getAPI(): FuseAPI {
+        return this._getAPIFactory().create(this.getContext().getPlatform());
     }
 
     /**
@@ -57,8 +88,8 @@ export abstract class FusePlugin {
      * @param cb 
      * @returns String - callbackID
      */
-    protected _createCallback(cb: TFuseAPICallbackHandler): string {
-        return this.$api.createCallbackContext(cb);
+    protected _createCallback(cb: TFuseAPICallbackHandler, apiOpts?: TAPIOpts): string {
+        return this._getAPI(apiOpts).createCallbackContext(cb);
     }
 
     /**
@@ -66,8 +97,8 @@ export abstract class FusePlugin {
      * 
      * @param id callbackID
      */
-    protected _releaseCallback(id: string): void {
-        this.$api.releaseCallback(id);
+    protected _releaseCallback(id: string, apiOpts?: TAPIOpts): void {
+        this._getAPI(apiOpts).releaseCallback(id);
     }
 
     /**
@@ -108,7 +139,7 @@ export abstract class FusePlugin {
      * @param data - The data to pass to the native environment
      * @returns {ArrayBuffer} The response body from native. FuseResponseReader has some utility methods to read the data in common formats (e.g. text or JSON)
      */
-    protected async _exec(method: string, contentType?: string, data?: TFuseAPIArgs): Promise<ArrayBuffer> {
-        return this.$api.execute(this.getID(), method, contentType, data);
+    protected async _exec(method: string, contentType?: string, data?: TFuseAPIArgs, apiOpts?: TAPIOpts): Promise<ArrayBuffer> {
+        return await this._getAPI(apiOpts).execute(this.getID(), method, contentType, data);
     }
 }
