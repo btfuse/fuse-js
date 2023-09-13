@@ -53,7 +53,7 @@ export class FuseError extends Error {
         return this.$cause;
     }
 
-    public static wrap(error: string | Error | FuseError | IFuseErrorSerialized) {
+    public static wrap(error: string | Error | FuseError | IFuseErrorSerialized | unknown): FuseError {
         let ferr: FuseError = null;
         if (typeof error === 'string') {
             ferr = new FuseError('Unknown', error, null, 0);
@@ -64,9 +64,15 @@ export class FuseError extends Error {
         else if (error instanceof Error) {
             ferr = new FuseError(error.toString(), error.message, error, 0);
         }
-        else {
+        else if (FuseError.$isSerializedFuseError(error)) {
             ferr = FuseError.fromSerialized(error);
         }
+        else {
+            console.error('Unwrappable Error', error);
+            ferr = new FuseError('FuseError', 'Unwrappable error', null, 0);
+        }
+
+        return ferr;
     }
 
     public static fromSerialized(error: IFuseErrorSerialized): FuseError {
@@ -75,5 +81,9 @@ export class FuseError extends Error {
 
     public toString() {
         return 'FuseError';
+    }
+
+    private static $isSerializedFuseError(error: any): error is IFuseErrorSerialized {
+        return 'message' in error && 'domain' in error && 'code' in error;
     }
 }
