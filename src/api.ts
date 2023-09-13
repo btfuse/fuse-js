@@ -47,3 +47,7 @@ export {IOSSchemeFuseAPI} from './ios/IOSSchemeFuseAPI';
 
 // Android Specific APIs / Implementations
 export {AndroidSchemeFuseAPI} from './android/AndroidSchemeFuseAPI';
+
+// Utilities
+export {ISerializable} from './ISerializable';
+export {IPrivilegedIntent} from './IPrivilegedIntent';
