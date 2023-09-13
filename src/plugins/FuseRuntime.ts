@@ -18,7 +18,7 @@ limitations under the License.
 import { ContentType } from '../ContentType';
 import { FuseContext } from '../FuseContext';
 import {FusePlugin} from '../FusePlugin';
-import {FuseResponseReader} from '../FuseResponseReader';
+import {FuseAPIResponse} from '../FuseAPIResponse';
 
 export type TPauseCallbackHandler = () => void;
 export type TResumeCallbackHandler = () => void;
@@ -40,8 +40,8 @@ export class FuseRuntime extends FusePlugin {
     }
     
     public async getInfo(): Promise<IRuntimeInfo> {
-        let data: ArrayBuffer = await this._exec('info');
-        return await FuseResponseReader.readAsJSON(data);
+        let data: FuseAPIResponse = await this._exec('info');
+        return await data.readAsJSON();
     }
 
     public async registerPauseHandler(cb: TPauseCallbackHandler): Promise<string> {

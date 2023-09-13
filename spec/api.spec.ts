@@ -27,10 +27,20 @@ import {Platform} from '../src/Platform';
 import {PlatformResolver} from '../src/PlatformResolver';
 import {Version} from '../src/Version';
 import {ContentType} from '../src/ContentType';
+import {FuseError} from '../src/FuseError';
+import {FuseAPIResponse} from '../src/FuseAPIResponse';
 
 describe('Public API', () => {
     it('AbstractFuseAPIFactory', () => {
         expect(api.AbstractFuseAPIFactory).toBe(AbstractFuseAPIFactory);
+    });
+
+    it('FuseError', () => {
+        expect(api.FuseError).toBe(FuseError);
+    });
+
+    it('FuseAPIResponse', () => {
+        expect(api.FuseAPIResponse).toBe(FuseAPIResponse);
     });
 
     it('ContentType', () => {

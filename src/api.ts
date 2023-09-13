@@ -27,6 +27,7 @@ export {
     TFuseAPIResponseData,
     IFuseAPICallPacket
 } from './FuseAPI';
+export {FuseAPIResponse} from './FuseAPIResponse';
 export {ContentType} from './ContentType';
 export {FuseResponseReader} from './FuseResponseReader';
 export {FuseAPIFactory} from './FuseAPIFactory';
@@ -39,6 +40,7 @@ export {
 } from './plugins/FuseRuntime';
 export {FusePlugin} from './FusePlugin';
 export {HTTPFuseAPI} from './HTTPFuseAPI';
+export {FuseError} from './FuseError';
 
 // iOS Specific APIs / Implementations
 export {IOSSchemeFuseAPI} from './ios/IOSSchemeFuseAPI';

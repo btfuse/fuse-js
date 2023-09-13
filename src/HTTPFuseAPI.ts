@@ -17,6 +17,8 @@ limitations under the License.
 
 import { ContentType } from './ContentType';
 import {FuseAPI, TFuseAPIArgs} from './FuseAPI';
+import { FuseAPIResponse } from './FuseAPIResponse';
+import {FuseError} from './FuseError';
 
 /**
  * A Fuse API implementation that uses HTTP protocol to make native calls
@@ -29,8 +31,8 @@ export class HTTPFuseAPI extends FuseAPI {
 
     protected _initHeaders(xhr: XMLHttpRequest): void {};
 
-    protected override _execute(pluginID: string, method: string, contentType: string, args: TFuseAPIArgs): Promise<ArrayBuffer> {
-        return new Promise<ArrayBuffer>((resolve, reject) => {
+    protected override _execute(pluginID: string, method: string, contentType: string, args: TFuseAPIArgs): Promise<FuseAPIResponse> {
+        return new Promise<FuseAPIResponse>((resolve, reject) => {
             let xhr: XMLHttpRequest = new XMLHttpRequest();
             xhr.responseType = 'arraybuffer';
             xhr.open('POST', `${this._getEndpoint()}${this._createRoute(pluginID, method)}`);
@@ -45,13 +47,22 @@ export class HTTPFuseAPI extends FuseAPI {
 
             this._initHeaders(xhr);
 
-            xhr.onload = () => {
-                resolve(xhr.response);
+            xhr.onload = async () => {
+                let response: FuseAPIResponse = new FuseAPIResponse(xhr.response, xhr.getAllResponseHeaders(), xhr.status);
+                if (response.isError()) {
+                    reject(await response.readAsError());
+                }
+                else {
+                    resolve(response);
+                }
             };
 
             xhr.onerror = (e) => {
-                // TODO: Wrap in custom FuseError
-                reject(e);
+                reject(new FuseError('FuseAPI', 'Network Error'));
+            };
+
+            xhr.ontimeout = (e) => {
+                reject(new FuseError('FuseAPI', 'API Timeout'));
             };
             
             if (args) {

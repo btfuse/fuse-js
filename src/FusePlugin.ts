@@ -18,6 +18,7 @@ limitations under the License.
 import { AbstractFuseAPIFactory } from "./AbstractFuseAPIFactory";
 import { FuseAPI, TFuseAPIArgs, TFuseAPICallbackHandler } from "./FuseAPI";
 import { FuseContext } from "./FuseContext";
+import {FuseAPIResponse} from './FuseAPIResponse';
 import { Platform } from "./Platform";
 
 /**
@@ -139,7 +140,7 @@ export abstract class FusePlugin<TAPIOpts = unknown> {
      * @param data - The data to pass to the native environment
      * @returns {ArrayBuffer} The response body from native. FuseResponseReader has some utility methods to read the data in common formats (e.g. text or JSON)
      */
-    protected async _exec(method: string, contentType?: string, data?: TFuseAPIArgs, apiOpts?: TAPIOpts): Promise<ArrayBuffer> {
+    protected async _exec(method: string, contentType?: string, data?: TFuseAPIArgs, apiOpts?: TAPIOpts): Promise<FuseAPIResponse> {
         return await this._getAPI(apiOpts).execute(this.getID(), method, contentType, data);
     }
 }

@@ -23,6 +23,7 @@ import {
     TNativeCallbackFunction
 } from './internals';
 import * as UUID from 'uuid';
+import { FuseAPIResponse } from './FuseAPIResponse';
 
 /**
  * The primitive data types that the API supports
@@ -71,13 +72,13 @@ export abstract class FuseAPI {
      * @param method 
      * @param args 
      */
-    protected abstract _execute(pluginID: string, method: string, contentType: string, args: TFuseAPIArgs): Promise<ArrayBuffer>;
+    protected abstract _execute(pluginID: string, method: string, contentType: string, args: TFuseAPIArgs): Promise<FuseAPIResponse>;
 
     protected _createRoute(pluginID: string, method: string): string {
         return `/api/${pluginID}/${method}`;
     }
 
-    public async execute(pluginID: string, method: string, contentType: string, args: TFuseAPIArgs): Promise<ArrayBuffer> {
+    public async execute(pluginID: string, method: string, contentType: string, args: TFuseAPIArgs): Promise<FuseAPIResponse> {
         return this._execute(pluginID, method, contentType, args);
     }
 
