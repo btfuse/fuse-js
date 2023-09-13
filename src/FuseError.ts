@@ -31,6 +31,7 @@ export class FuseError extends Error {
 
     public constructor(domain: string, message: string, cause?: TFuseErrorCause, code?: number) {
         super(message);
+        this.name = this.constructor.name;
         this.$domain = domain;
         this.$message = message;
         this.$code = code || 0;
@@ -62,7 +63,7 @@ export class FuseError extends Error {
             ferr = error;
         }
         else if (error instanceof Error) {
-            ferr = new FuseError(error.toString(), error.message, error, 0);
+            ferr = new FuseError(error.name, error.message, error, 0);
         }
         else if (FuseError.$isSerializedFuseError(error)) {
             ferr = FuseError.fromSerialized(error);
