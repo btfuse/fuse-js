@@ -29,8 +29,18 @@ import {Version} from '../src/Version';
 import {ContentType} from '../src/ContentType';
 import {FuseError} from '../src/FuseError';
 import {FuseAPIResponse} from '../src/FuseAPIResponse';
+import {PermissionStatus} from '../src/PermissionStatus';
+import {PermissionRequest} from '../src/PermissionRequest';
 
 describe('Public API', () => {
+    it('PermissionRequest', () => {
+        expect(api.PermissionRequest).toBe(PermissionRequest);
+    });
+
+    it('PermissionStatus', () => {
+        expect(api.PermissionStatus).toBe(PermissionStatus);
+    });
+
     it('AbstractFuseAPIFactory', () => {
         expect(api.AbstractFuseAPIFactory).toBe(AbstractFuseAPIFactory);
     });

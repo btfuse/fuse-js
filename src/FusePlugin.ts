@@ -20,6 +20,9 @@ import { FuseAPI, TFuseAPIArgs, TFuseAPICallbackHandler } from "./FuseAPI";
 import { FuseContext } from "./FuseContext";
 import {FuseAPIResponse} from './FuseAPIResponse';
 import { Platform } from "./Platform";
+import { ContentType } from "./ContentType";
+
+export type TAPIBridgeFunction = (type?: ContentType, data?: TFuseAPIArgs) => Promise<FuseAPIResponse>;
 
 /**
  * Base class for Fuse Plugins
@@ -142,5 +145,11 @@ export abstract class FusePlugin<TAPIOpts = unknown> {
      */
     protected async _exec(method: string, contentType?: string, data?: TFuseAPIArgs, apiOpts?: TAPIOpts): Promise<FuseAPIResponse> {
         return await this._getAPI(apiOpts).execute(this.getID(), method, contentType, data);
+    }
+
+    protected _createAPIBridge(route: string): TAPIBridgeFunction {
+        return async (type?: ContentType, data?: TFuseAPIArgs): Promise<FuseAPIResponse> => {
+            return await this._exec(route, type, data);
+        };
     }
 }

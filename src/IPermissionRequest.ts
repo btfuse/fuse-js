@@ -19,20 +19,19 @@ limitations under the License.
  * An interface to standardize handling permissions
  * @experimental
  */
-export interface IPrivilegedIntent {
+export interface IPermissionRequest<TSupportedPermission = unknown> {
     /**
      * A list of symbols that would represent the permission to request on the native side.
-     */
-    getPermissionSet(): string[];
-
-    /**
-     * Invoked when justification is required.
-     * This is an opportunity to show UX explaining your need permissions.
      * 
-     * This is an Android concept, so this will only be invoked on Android devices.
-     * iOS justification text appears in the permission prompt itself, and is defined via the plist.
+     * The implementation should define an enum, union type, or something that declares
+     * what permissions it supports requesting.
+     * 
+     * An implementation should support requesting a grouped set of permissions, which
+     * Android may combine into one prompt.
+     * 
+     * iOS will generally use one permission.
      */
-    onJustificationRequest(): Promise<boolean>;
+    getPermissionSet(): TSupportedPermission[];
 
     /**
      * Request the permission set

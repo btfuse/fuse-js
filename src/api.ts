@@ -50,4 +50,6 @@ export {AndroidSchemeFuseAPI} from './android/AndroidSchemeFuseAPI';
 
 // Utilities
 export {ISerializable} from './ISerializable';
-export {IPrivilegedIntent} from './IPrivilegedIntent';
+export {IPermissionRequest} from './IPermissionRequest';
+export {PermissionStatus} from './PermissionStatus';
+export {PermissionRequest, TJustificationHandler} from './PermissionRequest';
