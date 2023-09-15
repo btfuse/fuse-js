@@ -65,8 +65,15 @@ export class HTTPFuseAPI extends FuseAPI {
                 reject(new FuseError('FuseAPI', 'API Timeout'));
             };
             
-            if (args) {
-                xhr.send(JSON.stringify(args));
+            if (args !== undefined && args !== null) {
+                let xhrcontent: string;
+                if (typeof args === 'string') {
+                    xhrcontent = args;
+                }
+                else {
+                    xhrcontent = JSON.stringify(args);
+                }
+                xhr.send(xhrcontent);
             }
             else {
                 xhr.send();
