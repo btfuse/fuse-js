@@ -21,6 +21,7 @@ import { FuseError } from './FuseError';
 import {TAPIBridgeFunction} from './FusePlugin';
 import {IPermissionRequest} from './IPermissionRequest';
 import {PermissionStatus} from './PermissionStatus';
+import { TSerializable, TFuseSerializable } from './TSerializable';
 
 /**
  * Invoked to handle when permission justification is necessary.
@@ -35,6 +36,16 @@ import {PermissionStatus} from './PermissionStatus';
  * Return true if the permission request should proceed.
  */
 export type TJustificationHandler = () => Promise<boolean>;
+
+interface __IPermissionRequestArguments<T extends TSerializable> {
+    permissionSet: T[];
+    isJustified: boolean;
+}
+
+export type TPermissionRequestArguments<T extends TSerializable> = TFuseSerializable<__IPermissionRequestArguments<T>>;
+
+export type TAPIPermissionRequest<T extends TSerializable> = TAPIBridgeFunction<ContentType.JSON, TPermissionRequestArguments<T>>;
+
 
 /**
  * Abstract class to handle permission request.

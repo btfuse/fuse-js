@@ -15,38 +15,41 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {
-    RArray,
-    RObj
-} from './utilTypes';
+// import {
+//     RArray,
+//     RObj
+// } from './utilTypes';
 import {
     TNativeCallbackFunction
 } from './internals';
 import * as UUID from 'uuid';
 import { FuseAPIResponse } from './FuseAPIResponse';
+import { TSerializable } from './TSerializable';
+import { FuseSerializer } from './FuseSerializer';
 
 /**
  * The primitive data types that the API supports
  */
-export type TFuseAPISupportedArgPrimitives = string | number | boolean | Blob | ArrayBuffer;
+// export type TFuseAPISupportedArgPrimitives = string | number | boolean | Blob | ArrayBuffer;
 
 /**
  * Supported argument types, which can be any of TFuseAPISupportedArgPrimitives, or a recursive object or array structure of TFuseAPISupportedArgPrimitives
  */
-export type TFuseAPIArgs = TFuseAPISupportedArgPrimitives | RArray<TFuseAPISupportedArgPrimitives | RObj<TFuseAPISupportedArgPrimitives>> | RObj<TFuseAPISupportedArgPrimitives | RArray<TFuseAPISupportedArgPrimitives>>;
+// export type TFuseAPIArgs = TFuseAPISupportedArgPrimitives | RArray<TFuseAPISupportedArgPrimitives | RObj<TFuseAPISupportedArgPrimitives>> | RObj<TFuseAPISupportedArgPrimitives | RArray<TFuseAPISupportedArgPrimitives>>;
+// export type TFuseAPIArgs = Blob;
 
 /**
  * Generic API response data type
  */
 export interface TFuseAPIResponseData {
     keep: boolean;
-    data?: TFuseAPIArgs
+    data?: Blob;
 }
 
 export interface IFuseAPICallPacket {
     route: string;
     callbackID: string;
-    body: TFuseAPIArgs;
+    body: Blob;
     contentType: string;
 }
 
@@ -65,6 +68,20 @@ window.__nbsfuse_doCallback = function(callbackID: string, data: string) {
  */
 export abstract class FuseAPI {
 
+    private $serializer: FuseSerializer;
+
+    public constructor() {
+        this.$serializer = this._createSerializer();
+    }
+
+    protected _createSerializer(): FuseSerializer {
+        return new FuseSerializer();
+    }
+
+    public getSerializer(): FuseSerializer {
+        return this.$serializer;
+    }
+
     /**
      * Override to implement execute native bridge logic
      * 
@@ -72,14 +89,14 @@ export abstract class FuseAPI {
      * @param method 
      * @param args 
      */
-    protected abstract _execute(pluginID: string, method: string, contentType: string, args: TFuseAPIArgs): Promise<FuseAPIResponse>;
+    protected abstract _execute(pluginID: string, method: string, contentType: string, args: Blob): Promise<FuseAPIResponse>;
 
     protected _createRoute(pluginID: string, method: string): string {
         return `/api/${pluginID}/${method}`;
     }
 
-    public async execute(pluginID: string, method: string, contentType: string, args: TFuseAPIArgs): Promise<FuseAPIResponse> {
-        return this._execute(pluginID, method, contentType, args);
+    public async execute(pluginID: string, method: string, contentType: string, args: TSerializable): Promise<FuseAPIResponse> {
+        return this._execute(pluginID, method, contentType, this.$serializer.serialize(args));
     }
 
     public createCallbackContext(cb: TFuseAPICallbackHandler): string {

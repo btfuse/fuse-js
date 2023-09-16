@@ -22,10 +22,9 @@ export {FuseContext} from './FuseContext';
 export {Version} from './Version';
 export {
     FuseAPI,
-    TFuseAPIArgs,
-    TFuseAPISupportedArgPrimitives,
     TFuseAPIResponseData,
-    IFuseAPICallPacket
+    IFuseAPICallPacket,
+    TFuseAPICallbackHandler
 } from './FuseAPI';
 export {FuseAPIResponse} from './FuseAPIResponse';
 export {ContentType} from './ContentType';
@@ -38,7 +37,7 @@ export {
     TResumeCallbackHandler,
     IRuntimeInfo
 } from './plugins/FuseRuntime';
-export {FusePlugin} from './FusePlugin';
+export {FusePlugin, TAPIBridgeFunction} from './FusePlugin';
 export {HTTPFuseAPI} from './HTTPFuseAPI';
 export {FuseError} from './FuseError';
 
@@ -50,6 +49,8 @@ export {AndroidSchemeFuseAPI} from './android/AndroidSchemeFuseAPI';
 
 // Utilities
 export {ISerializable} from './ISerializable';
+export {TSerializable, TFuseSerializable} from './TSerializable';
+export {FuseSerializer} from './FuseSerializer';
 export {IPermissionRequest} from './IPermissionRequest';
 export {PermissionStatus} from './PermissionStatus';
 export {PermissionRequest, TJustificationHandler} from './PermissionRequest';

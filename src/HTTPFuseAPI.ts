@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import { ContentType } from './ContentType';
-import {FuseAPI, TFuseAPIArgs} from './FuseAPI';
+import {FuseAPI} from './FuseAPI';
 import { FuseAPIResponse } from './FuseAPIResponse';
 import {FuseError} from './FuseError';
 
@@ -31,7 +31,7 @@ export class HTTPFuseAPI extends FuseAPI {
 
     protected _initHeaders(xhr: XMLHttpRequest): void {};
 
-    protected override _execute(pluginID: string, method: string, contentType: string, args: TFuseAPIArgs): Promise<FuseAPIResponse> {
+    protected override _execute(pluginID: string, method: string, contentType: string, data: Blob): Promise<FuseAPIResponse> {
         return new Promise<FuseAPIResponse>((resolve, reject) => {
             let xhr: XMLHttpRequest = new XMLHttpRequest();
             xhr.responseType = 'arraybuffer';
@@ -65,15 +65,8 @@ export class HTTPFuseAPI extends FuseAPI {
                 reject(new FuseError('FuseAPI', 'API Timeout'));
             };
             
-            if (args !== undefined && args !== null) {
-                let xhrcontent: string;
-                if (typeof args === 'string') {
-                    xhrcontent = args;
-                }
-                else {
-                    xhrcontent = JSON.stringify(args);
-                }
-                xhr.send(xhrcontent);
+            if (data !== undefined && data !== null) {
+                xhr.send(data);
             }
             else {
                 xhr.send();

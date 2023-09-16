@@ -16,13 +16,16 @@ limitations under the License.
 */
 
 import { AbstractFuseAPIFactory } from "./AbstractFuseAPIFactory";
-import { FuseAPI, TFuseAPIArgs, TFuseAPICallbackHandler } from "./FuseAPI";
+import { FuseAPI, /*, TFuseAPIArgs,*/ TFuseAPICallbackHandler } from "./FuseAPI";
 import { FuseContext } from "./FuseContext";
 import {FuseAPIResponse} from './FuseAPIResponse';
 import { Platform } from "./Platform";
 import { ContentType } from "./ContentType";
+import { TSerializable } from "./TSerializable";
+import { ISerializable } from "./ISerializable";
+import { FuseSerializer } from "./FuseSerializer";
 
-export type TAPIBridgeFunction = (type?: ContentType, data?: TFuseAPIArgs) => Promise<FuseAPIResponse>;
+export type TAPIBridgeFunction<TContentType extends ContentType = ContentType, TData extends TSerializable = TSerializable> = (type?: TContentType, data?: TData) => Promise<FuseAPIResponse>;
 
 /**
  * Base class for Fuse Plugins
@@ -143,13 +146,21 @@ export abstract class FusePlugin<TAPIOpts = unknown> {
      * @param data - The data to pass to the native environment
      * @returns {ArrayBuffer} The response body from native. FuseResponseReader has some utility methods to read the data in common formats (e.g. text or JSON)
      */
-    protected async _exec(method: string, contentType?: string, data?: TFuseAPIArgs, apiOpts?: TAPIOpts): Promise<FuseAPIResponse> {
+    protected async _exec(method: string, contentType?: string, data?: TSerializable, apiOpts?: TAPIOpts): Promise<FuseAPIResponse> {
         return await this._getAPI(apiOpts).execute(this.getID(), method, contentType, data);
     }
 
-    protected _createAPIBridge(route: string): TAPIBridgeFunction {
-        return async (type?: ContentType, data?: TFuseAPIArgs): Promise<FuseAPIResponse> => {
-            return await this._exec(route, type, data);
+    protected _createAPIBridge(route: string, serializer?: FuseSerializer): TAPIBridgeFunction {
+        if (!serializer) {
+            serializer = new FuseSerializer();
+        }
+
+        return async (type?: ContentType, data?: TSerializable): Promise<FuseAPIResponse> => {
+            return await this._exec(route, type, serializer.serialize(data));
         };
+    }
+
+    private $isISerializable(x: any): x is ISerializable {
+        return !!x.serialize;
     }
 }
