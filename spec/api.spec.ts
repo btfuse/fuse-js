@@ -29,8 +29,8 @@ import {Version} from '../src/Version';
 import {ContentType} from '../src/ContentType';
 import {FuseError} from '../src/FuseError';
 import {FuseAPIResponse} from '../src/FuseAPIResponse';
-import {PermissionStatus} from '../src/PermissionStatus';
-import {PermissionRequest} from '../src/PermissionRequest';
+import {FusePermissionState} from '../src/FusePermissionState';
+import {PermissionRequest} from '../src/FusePermissionRequest';
 
 describe('Public API', () => {
     it('PermissionRequest', () => {
@@ -38,7 +38,7 @@ describe('Public API', () => {
     });
 
     it('PermissionStatus', () => {
-        expect(api.PermissionStatus).toBe(PermissionStatus);
+        expect(api.FusePermissionState).toBe(FusePermissionState);
     });
 
     it('AbstractFuseAPIFactory', () => {

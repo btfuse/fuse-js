@@ -51,6 +51,13 @@ export {AndroidSchemeFuseAPI} from './android/AndroidSchemeFuseAPI';
 export {ISerializable} from './ISerializable';
 export {TSerializable, TFuseSerializable} from './TSerializable';
 export {FuseSerializer} from './FuseSerializer';
-export {IPermissionRequest} from './IPermissionRequest';
-export {PermissionStatus} from './PermissionStatus';
-export {PermissionRequest, TJustificationHandler} from './PermissionRequest';
+export {IFusePermissionRequest} from './IFusePermissionRequest';
+export {FusePermissionState} from './FusePermissionState';
+export {
+    PermissionRequest,
+    TFuseAPIPermissionRequest,
+    TFuseJustificationHandler,
+    TFusePermissionRequestArguments
+} from './FusePermissionRequest';
+export {IFuseGrantResults} from './IFuseGrantResults';
+export {FusePermissionGrantResult} from './FusePermissionGrantResult';

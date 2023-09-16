@@ -15,11 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import {FusePermissionGrantResult} from './FusePermissionGrantResult';
+
 /**
  * An interface to standardize handling permissions
  * @experimental
  */
-export interface IPermissionRequest<TSupportedPermission = unknown> {
+export interface IFusePermissionRequest<TSupportedPermission extends number = number> {
     /**
      * A list of symbols that would represent the permission to request on the native side.
      * 
@@ -38,5 +40,5 @@ export interface IPermissionRequest<TSupportedPermission = unknown> {
      * Will resolve if all permissions in the set is granted.
      * Rejects otherwise.
      */
-    request(): Promise<void>;
+    request(): Promise<FusePermissionGrantResult<TSupportedPermission>>;
 }

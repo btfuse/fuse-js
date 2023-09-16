@@ -19,9 +19,9 @@ import { ContentType } from './ContentType';
 import { FuseAPIResponse } from './FuseAPIResponse';
 import { FuseError } from './FuseError';
 import {TAPIBridgeFunction} from './FusePlugin';
-import {IPermissionRequest} from './IPermissionRequest';
-import {PermissionStatus} from './PermissionStatus';
-import { TSerializable, TFuseSerializable } from './TSerializable';
+import {IFusePermissionRequest} from './IFusePermissionRequest';
+import { TFuseSerializable } from './TSerializable';
+import {FusePermissionGrantResult} from './FusePermissionGrantResult';
 
 /**
  * Invoked to handle when permission justification is necessary.
@@ -35,16 +35,16 @@ import { TSerializable, TFuseSerializable } from './TSerializable';
  * 
  * Return true if the permission request should proceed.
  */
-export type TJustificationHandler = () => Promise<boolean>;
+export type TFuseJustificationHandler = () => Promise<boolean>;
 
-interface __IPermissionRequestArguments<T extends TSerializable> {
+interface __IPermissionRequestArguments<T extends number> {
     permissionSet: T[];
     isJustified: boolean;
 }
 
-export type TPermissionRequestArguments<T extends TSerializable> = TFuseSerializable<__IPermissionRequestArguments<T>>;
+export type TFusePermissionRequestArguments<T extends number> = TFuseSerializable<__IPermissionRequestArguments<T>>;
 
-export type TAPIPermissionRequest<T extends TSerializable> = TAPIBridgeFunction<ContentType.JSON, TPermissionRequestArguments<T>>;
+export type TFuseAPIPermissionRequest<T extends number = number> = TAPIBridgeFunction<ContentType.JSON, TFusePermissionRequestArguments<T>>;
 
 
 /**
@@ -52,14 +52,14 @@ export type TAPIPermissionRequest<T extends TSerializable> = TAPIBridgeFunction<
  * Concrete classes should implement the protected _request method to call on their
  * permission request Fuse API.
  */
-export class PermissionRequest<TSupportedPermission = unknown> implements IPermissionRequest<TSupportedPermission> {
+export class PermissionRequest<TSupportedPermission extends number> implements IFusePermissionRequest<TSupportedPermission> {
     private static readonly TAG: string = 'PermissionRequest';
 
-    private $api: TAPIBridgeFunction;
+    private $api: TFuseAPIPermissionRequest<TSupportedPermission>;
     private $permissionSet: TSupportedPermission[];
-    private $justificationHandler: TJustificationHandler | null;
+    private $justificationHandler: TFuseJustificationHandler | null;
 
-    public constructor(apiBridge: TAPIBridgeFunction, permissionSet: TSupportedPermission[], justificationHandler: TJustificationHandler = null) {
+    public constructor(apiBridge: TFuseAPIPermissionRequest<TSupportedPermission>, permissionSet: TSupportedPermission[], justificationHandler: TFuseJustificationHandler = null) {
         if (!permissionSet || (permissionSet && permissionSet.length === 0)) {
             throw new FuseError(PermissionRequest.TAG, 'At least one permission is required');
         }
@@ -73,22 +73,17 @@ export class PermissionRequest<TSupportedPermission = unknown> implements IPermi
         return this.$permissionSet;
     }
 
-    private $createRejectionError(): FuseError {
-        return new FuseError(PermissionRequest.TAG, 'Permission Denied');
-    }
+    private async $request(isJustified: boolean): Promise<FusePermissionGrantResult<TSupportedPermission>> {
+        let response: FuseAPIResponse = await this.$api(ContentType.JSON, {
+            permissionSet: this.getPermissionSet(),
+            isJustified: isJustified
+        });
 
-    private async $request(): Promise<PermissionStatus> {
-        let response: FuseAPIResponse = await this.$api(ContentType.JSON, JSON.stringify(this.getPermissionSet()));
         if (response.isError()) {
             throw await response.readAsError();
         }
 
-        let code: PermissionStatus = parseInt(await response.readAsText());
-        if (code < PermissionStatus.GRANTED || code > PermissionStatus.DENIED) {
-            throw new FuseError(PermissionRequest.TAG, 'request response is an invalid PermissionStatus value');
-        }
-
-        return code;
+        return new FusePermissionGrantResult(await response.readAsJSON());
     }
 
     private async $onJustificationRequest(): Promise<boolean> {
@@ -100,34 +95,18 @@ export class PermissionRequest<TSupportedPermission = unknown> implements IPermi
         return await this.$justificationHandler();
     }
     
-    public async request(): Promise<void> {
-        let status: PermissionStatus = await this.$request();
+    public async request(): Promise<FusePermissionGrantResult<TSupportedPermission>> {
+        let results: FusePermissionGrantResult<TSupportedPermission> = await this.$request(false);
 
-        if (status === PermissionStatus.GRANTED) {
-            return; //success
-        }
-
-        if (status === PermissionStatus.DENIED) {
-            throw this.$createRejectionError();
-        }
-
-        if (status === PermissionStatus.REQUIRES_JUSTIFICATION) {
+        if (results.shouldJustify()) {
             if (await this.$onJustificationRequest()) {
-                status = await this.$request();
+                results = await this.$request(true);
             }
             else {
-                throw this.$createRejectionError();
-            }
-
-            if (status === PermissionStatus.GRANTED) {
-                return; //success
-            }
-            else {
-                throw this.$createRejectionError();
+                results.rejectJustifications();
             }
         }
 
-        // We should never actually reach here
-        throw new FuseError(PermissionRequest.TAG, 'Internal Error');
+        return results;
     }
 }

@@ -159,8 +159,4 @@ export abstract class FusePlugin<TAPIOpts = unknown> {
             return await this._exec(route, type, serializer.serialize(data));
         };
     }
-
-    private $isISerializable(x: any): x is ISerializable {
-        return !!x.serialize;
-    }
 }
