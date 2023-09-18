@@ -22,7 +22,6 @@ import {FuseAPIResponse} from './FuseAPIResponse';
 import { Platform } from "./Platform";
 import { ContentType } from "./ContentType";
 import { TSerializable } from "./TSerializable";
-import { ISerializable } from "./ISerializable";
 import { FuseSerializer } from "./FuseSerializer";
 
 export type TAPIBridgeFunction<TContentType extends ContentType = ContentType, TData extends TSerializable = TSerializable> = (type?: TContentType, data?: TData) => Promise<FuseAPIResponse>;

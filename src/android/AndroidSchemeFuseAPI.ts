@@ -30,11 +30,11 @@ declare global {
  * A Fuse API implementation for an embedded HTTP server to bridge the JS and Native API calls.
  */
 export class AndroidSchemeFuseAPI extends HTTPFuseAPI {
-    protected override _getEndpoint(): string {
+    protected override async _getEndpoint(): Promise<string> {
         return `http://localhost:${window.NBSNative.getAPIPort()}`;
     }
 
-    protected override _initHeaders(xhr: XMLHttpRequest): void {
+    protected override async _initHeaders(xhr: XMLHttpRequest): Promise<void> {
         xhr.setRequestHeader('X-Fuse-Secret', window.NBSNative.getAPISecret());
     }
 }

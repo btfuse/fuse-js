@@ -15,10 +15,32 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// import {FuseAPI, FuseAPIContentType, TFuseAPIArgs} from '../FuseAPI';
 import {HTTPFuseAPI} from '../HTTPFuseAPI';
+
+declare global {
+    interface Window {
+        webkit: {
+            messageHandlers: {
+                getAPIPort: {
+                    postMessage: (unused: "") => number;
+                },
+                getAPISecret: {
+                    postMessage: (unused: "") => string;
+                }
+            }
+        }
+    }
+}
 
 /**
  * A Fuse API implementation for iOS that uses WKURLSchemeHandler to bridge the JS and Native API calls.
  */
-export class IOSSchemeFuseAPI extends HTTPFuseAPI {}
+export class IOSSchemeFuseAPI extends HTTPFuseAPI {
+    protected override async _getEndpoint(): Promise<string> {
+        return `http://localhost:${await window.webkit.messageHandlers.getAPIPort.postMessage("")}`;
+    }
+
+    protected override async _initHeaders(xhr: XMLHttpRequest): Promise<void> {
+        xhr.setRequestHeader('X-Fuse-Secret', await window.webkit.messageHandlers.getAPISecret.postMessage(""));
+    }
+}

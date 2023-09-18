@@ -25,28 +25,29 @@ import {FuseError} from './FuseError';
  */
 export class HTTPFuseAPI extends FuseAPI {
     
-    protected _getEndpoint() {
+    protected async _getEndpoint(): Promise<string> {
         return '';
     }
 
-    protected _initHeaders(xhr: XMLHttpRequest): void {};
+    protected async _initHeaders(xhr: XMLHttpRequest): Promise<void> {};
 
-    protected override _execute(pluginID: string, method: string, contentType: string, data: Blob): Promise<FuseAPIResponse> {
+    protected override async _execute(pluginID: string, method: string, contentType: string, data: Blob): Promise<FuseAPIResponse> {
+        let endpoint: string = await this._getEndpoint();
+        let xhr: XMLHttpRequest = new XMLHttpRequest();
+        xhr.responseType = 'arraybuffer';
+        xhr.open('POST', `${endpoint}${this._createRoute(pluginID, method)}`);
+        
+        if (!contentType) {
+            contentType = ContentType.BINARY;
+        }
+
+        if (contentType) {
+            xhr.setRequestHeader('Content-Type', contentType);
+        }
+
+        await this._initHeaders(xhr);
+
         return new Promise<FuseAPIResponse>((resolve, reject) => {
-            let xhr: XMLHttpRequest = new XMLHttpRequest();
-            xhr.responseType = 'arraybuffer';
-            xhr.open('POST', `${this._getEndpoint()}${this._createRoute(pluginID, method)}`);
-
-            if (!contentType) {
-                contentType = ContentType.BINARY;
-            }
-
-            if (contentType) {
-                xhr.setRequestHeader('Content-Type', contentType);
-            }
-
-            this._initHeaders(xhr);
-
             xhr.onload = async () => {
                 let response: FuseAPIResponse = new FuseAPIResponse(xhr.response, xhr.getAllResponseHeaders(), xhr.status);
                 if (response.isError()) {
