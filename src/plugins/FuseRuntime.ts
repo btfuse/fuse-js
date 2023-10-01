@@ -25,6 +25,7 @@ export type TResumeCallbackHandler = () => void;
 
 export interface IRuntimeInfo {
     version: string;
+    debugMode: boolean;
 }
 
 export class FuseRuntime extends FusePlugin {
@@ -40,7 +41,7 @@ export class FuseRuntime extends FusePlugin {
     }
     
     public async getInfo(): Promise<IRuntimeInfo> {
-        let data: FuseAPIResponse = await this._exec('info');
+        let data: FuseAPIResponse = await this._exec('/info');
         return await data.readAsJSON();
     }
 

@@ -34,6 +34,7 @@ export class FuseContext {
     private $platform: Platform;
     private $runtime: FuseRuntime;
     private $runtimeVersion: Version;
+    private $runtimeInfo: IRuntimeInfo;
     private $defaultAPIFactory: AbstractFuseAPIFactory;
 
     public constructor() {
@@ -60,13 +61,26 @@ export class FuseContext {
         return this.$platform;
     }
 
+    private async $getRuntimeInfo(): Promise<IRuntimeInfo> {
+        if (!this.$runtimeInfo) {
+            this.$runtimeInfo = await this.$runtime.getInfo();
+        }
+
+        return this.$runtimeInfo;
+    }
+
     public async getPlatformVersion(): Promise<Version> {
         if (!this.$runtimeVersion) {
-            let info: IRuntimeInfo = await this.$runtime.getInfo();
+            let info: IRuntimeInfo = await this.$getRuntimeInfo();
             this.$runtimeVersion = Version.parseVersionString(info.version);
         }
         
         return this.$runtimeVersion;
+    }
+
+    public async isDebugMode(): Promise<boolean> {
+        let info: IRuntimeInfo = await this.$getRuntimeInfo();
+        return info.debugMode;
     }
 
     public async registerPauseHandler(callback: TPauseCallbackHandler): Promise<string> {
