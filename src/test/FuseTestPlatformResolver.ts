@@ -15,15 +15,11 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/**
- * Enumeration for supported platforms
- */
-export enum Platform {
-    IOS = 1,
-    ANDROID,
-    /**
-     * Specialized platform used for test environments,
-     * will not be used for regular runtimes.
-     */
-    TEST
+import { Platform } from '../Platform';
+import {PlatformResolver} from '../PlatformResolver';
+
+export class FuseTestPlataformResolver extends PlatformResolver {
+    public override resolve(): Platform {
+        return Platform.TEST;
+    }
 }

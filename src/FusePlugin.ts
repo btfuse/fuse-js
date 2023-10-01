@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import { AbstractFuseAPIFactory } from "./AbstractFuseAPIFactory";
-import { FuseAPI, /*, TFuseAPIArgs,*/ TFuseAPICallbackHandler } from "./FuseAPI";
+import { FuseAPI, TFuseAPICallbackHandler } from "./FuseAPI";
 import { FuseContext } from "./FuseContext";
 import {FuseAPIResponse} from './FuseAPIResponse';
 import { Platform } from "./Platform";

@@ -15,15 +15,23 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/**
- * Enumeration for supported platforms
- */
-export enum Platform {
-    IOS = 1,
-    ANDROID,
-    /**
-     * Specialized platform used for test environments,
-     * will not be used for regular runtimes.
-     */
-    TEST
+import {AbstractFuseAPIFactory} from '../AbstractFuseAPIFactory';
+import { FuseAPI } from '../FuseAPI';
+import { Platform } from '../Platform';
+import { FuseTestAPI } from './FuseTestAPI';
+
+export class FuseTestAPIFactory extends AbstractFuseAPIFactory {
+    private $cache: FuseTestAPI;
+
+    public constructor() {
+        super();
+        this.$cache = null;
+    }
+
+    public create(platform: Platform): FuseAPI {
+        if (this.$cache === null) {
+            this.$cache = new FuseTestAPI();
+        }
+        return this.$cache;
+    }
 }

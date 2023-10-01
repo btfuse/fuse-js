@@ -22,8 +22,7 @@ import { Platform } from "./Platform";
  */
 export class PlatformResolver {
     public resolve(): Platform {
-        
-        if (location.protocol === 'nbsfuse:') {
+        if (this.isIOSEnvironment()) {
             return Platform.IOS;
         }
         else {
@@ -31,5 +30,13 @@ export class PlatformResolver {
             // it's assumed
             return Platform.ANDROID;
         }
+    }
+
+    public isIOSEnvironment(): boolean {
+        return location.protocol === 'nbsfuse:';
+    }
+
+    public isAndroidEnvironment() {
+        return !this.isIOSEnvironment();
     }
 }

@@ -15,15 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-/**
- * Enumeration for supported platforms
- */
-export enum Platform {
-    IOS = 1,
-    ANDROID,
-    /**
-     * Specialized platform used for test environments,
-     * will not be used for regular runtimes.
-     */
-    TEST
+import {HTTPFuseAPI} from '../api';
+
+export class FuseTestAPI extends HTTPFuseAPI {
+    protected override async _getEndpoint(): Promise<string> {
+        return `http://localhost:12345`;
+    }
 }

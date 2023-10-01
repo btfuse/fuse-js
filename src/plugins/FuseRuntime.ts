@@ -49,14 +49,14 @@ export class FuseRuntime extends FusePlugin {
             cb();
         });
 
-        await this._exec('registerPauseHandler', ContentType.TEXT, cbID);
+        await this._exec('/registerPauseHandler', ContentType.TEXT, cbID);
         this.$callbackIDs.push(cbID);
 
         return cbID;
     }
 
     public async unregisterPauseHandler(callbackID: string): Promise<void> {
-        await this._exec('unregisterPauseHandler', ContentType.TEXT, callbackID);
+        await this._exec('/unregisterPauseHandler', ContentType.TEXT, callbackID);
     }
 
     public async registerResumeHandler(cb: TResumeCallbackHandler): Promise<string> {
@@ -64,13 +64,13 @@ export class FuseRuntime extends FusePlugin {
             cb();
         });
 
-        await this._exec('registerResumeHandler', ContentType.TEXT, cbID);
+        await this._exec('/registerResumeHandler', ContentType.TEXT, cbID);
         this.$callbackIDs.push(cbID);
 
         return cbID;
     }
 
     public async unregisterResumeHandler(callbackID: string): Promise<void> {
-        await this._exec('unregisterResumeHandler', ContentType.TEXT, callbackID);
+        await this._exec('/unregisterResumeHandler', ContentType.TEXT, callbackID);
     }
 }

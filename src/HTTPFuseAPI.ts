@@ -31,11 +31,15 @@ export class HTTPFuseAPI extends FuseAPI {
 
     protected async _initHeaders(xhr: XMLHttpRequest): Promise<void> {};
 
-    protected override async _execute(pluginID: string, method: string, contentType: string, data: Blob): Promise<FuseAPIResponse> {
+    public async buildRoute(pluginID: string, method: string): Promise<string> {
         let endpoint: string = await this._getEndpoint();
+        return `${endpoint}${this._createRoute(pluginID, method)}`;
+    }
+
+    protected override async _execute(pluginID: string, method: string, contentType: string, data: Blob): Promise<FuseAPIResponse> {
         let xhr: XMLHttpRequest = new XMLHttpRequest();
         xhr.responseType = 'arraybuffer';
-        xhr.open('POST', `${endpoint}${this._createRoute(pluginID, method)}`);
+        xhr.open('POST', await this.buildRoute(pluginID, method));
         
         if (!contentType) {
             contentType = ContentType.BINARY;
@@ -46,7 +50,10 @@ export class HTTPFuseAPI extends FuseAPI {
         }
 
         await this._initHeaders(xhr);
+        return await this._doRequest(xhr, data);
+    }
 
+    protected _doRequest(xhr: XMLHttpRequest, data: Blob): Promise<FuseAPIResponse> {
         return new Promise<FuseAPIResponse>((resolve, reject) => {
             xhr.onload = async () => {
                 let response: FuseAPIResponse = new FuseAPIResponse(xhr.response, xhr.getAllResponseHeaders(), xhr.status);
@@ -66,12 +73,16 @@ export class HTTPFuseAPI extends FuseAPI {
                 reject(new FuseError('FuseAPI', 'API Timeout'));
             };
             
-            if (data !== undefined && data !== null) {
-                xhr.send(data);
-            }
-            else {
-                xhr.send();
-            }
+            this._doSend(xhr, data);
         });
+    }
+
+    protected _doSend(xhr: XMLHttpRequest, data: Blob): void {
+        if (data !== undefined && data !== null) {
+            xhr.send(data);
+        }
+        else {
+            xhr.send();
+        }
     }
 }

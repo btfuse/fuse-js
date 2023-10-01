@@ -39,20 +39,20 @@ export class FuseAPIFactory extends AbstractFuseAPIFactory {
 
     public override create(platform: Platform): FuseAPI {
         switch (platform) {
-            case Platform.IOS: return this.$createIOSScheme();
-            case Platform.ANDROID: return this.$createAndroidScheme();
+            case Platform.IOS: return this._createiOSAPI();
+            case Platform.ANDROID: return this._createAndroidAPI();
             default: throw new Error('Unsupported platform: ' + platform);
         }
     }
 
-    private $createIOSScheme(): FuseAPI {
+    protected _createiOSAPI(): FuseAPI {
         if (!this.$iosScheme) {
             this.$iosScheme = new IOSSchemeFuseAPI();
         }
         return this.$iosScheme;
     }
 
-    private $createAndroidScheme(): FuseAPI {
+    protected _createAndroidAPI(): FuseAPI {
         if (!this.$androidScheme) {
             this.$androidScheme = new AndroidSchemeFuseAPI();
         }

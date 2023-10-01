@@ -92,7 +92,7 @@ export abstract class FuseAPI {
     protected abstract _execute(pluginID: string, method: string, contentType: string, args: Blob): Promise<FuseAPIResponse>;
 
     protected _createRoute(pluginID: string, method: string): string {
-        return `/api/${pluginID}/${method}`;
+        return `/api/${pluginID}${method}`;
     }
 
     public async execute(pluginID: string, method: string, contentType: string, args: TSerializable): Promise<FuseAPIResponse> {

@@ -17,7 +17,6 @@ limitations under the License.
 
 import { AbstractFuseAPIFactory } from './AbstractFuseAPIFactory';
 import { FuseAPIFactory } from './FuseAPIFactory';
-// import { FuseContentAPIFactory } from './FuseContentAPIFactory';
 import { Platform } from "./Platform";
 import { PlatformResolver } from "./PlatformResolver";
 import {
