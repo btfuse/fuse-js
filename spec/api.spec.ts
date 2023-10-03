@@ -41,6 +41,7 @@ import {FusePermissionState} from '../src/FusePermissionState';
 import {
     FusePlugin
 } from '../src/FusePlugin';
+import {FuseCallbackManager, TFuseAPICallbackHandler} from '../src/FuseCallbackManager';
 import {FuseResponseReader} from '../src/FuseResponseReader';
 import {FuseSerializer} from '../src/FuseSerializer';
 import {HTTPFuseAPI} from '../src/HTTPFuseAPI';
@@ -70,6 +71,16 @@ describe('Public API', () => {
 
     it('ContentType', () => {
         expect(api.ContentType).toBe(ContentType);
+    });
+
+    describe('FuseCallbackManager', () => {
+        it('', () => {
+            expect(api.FuseCallbackManager).toBe(FuseCallbackManager);
+        });
+
+        it('TFuseAPICallbackHandler', () => {
+            let test: api.TFuseAPICallbackHandler = null;
+        });
     });
 
     describe('Fuse API', () => {

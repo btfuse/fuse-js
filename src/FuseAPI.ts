@@ -15,17 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-// import {
-//     RArray,
-//     RObj
-// } from './utilTypes';
-import {
-    TNativeCallbackFunction
-} from './internals';
-import * as UUID from 'uuid';
 import { FuseAPIResponse } from './FuseAPIResponse';
 import { TSerializable } from './TSerializable';
 import { FuseSerializer } from './FuseSerializer';
+import { FuseCallbackManager, TFuseAPICallbackHandler } from './FuseCallbackManager';
 
 /**
  * The primitive data types that the API supports
@@ -53,15 +46,7 @@ export interface IFuseAPICallPacket {
     contentType: string;
 }
 
-export type TFuseAPICallbackHandler = (data: string) => void;
 
-window.__nbsfuse_callbacks = new Map<string, TNativeCallbackFunction>();
-
-window.__nbsfuse_doCallback = function(callbackID: string, data: string) {
-    if (callbackID && window.__nbsfuse_callbacks.has(callbackID)) {
-        window.__nbsfuse_callbacks.get(callbackID)(data);
-    }
-};
 
 /**
  * Base class for the Fuse API bridge for exchanging data with the native platform
@@ -100,15 +85,10 @@ export abstract class FuseAPI {
     }
 
     public createCallbackContext(cb: TFuseAPICallbackHandler): string {
-        let id: string = UUID.v4();
-        window.__nbsfuse_callbacks.set(id, (data: string): void => {
-            cb(data);
-        });
-
-        return id;
+        return FuseCallbackManager.getInstance().createCallback(cb);
     }
 
     public releaseCallback(id: string): void {
-        window.__nbsfuse_callbacks.delete(id);
+        FuseCallbackManager.getInstance().releaseCallback(id);
     }
 }

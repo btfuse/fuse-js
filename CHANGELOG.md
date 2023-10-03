@@ -55,3 +55,15 @@ To save on processing, bridging logs to the native environment by default is onl
 let context: FuseContext = getContext();
 context.getLogger().enableNativeBridge(true);
 ```
+
+#### FuseCallbackManager
+
+A new `FuseCallbackManager` API has been added which is a singleton class to manage callbacks for native use.
+
+This was actually part of the `FusePlugin` implementation before but it now abstracted out so that it can be used more generically.
+
+Register a callback context id using `FuseCallbackManager.getInstance().createCallback(callback)` and pass the ID to the native environment, which can use native APIs with the provided callback ID to respond back to the webview environment.
+
+Use `FuseCallbackManager.getInstance().releaseCallback(id)` to destroy the listener on the webview and free up resources.
+
+Note that using the callback API uses the traditional data transfer mechanisms which only accepts strings and is not very efficient in transfering large data payloads. When possible, prefer to use the Plugin API approach. The callback API is however useful for creating watch/subscriber APIs where the native must be able to continuously or periodically callback to the webview with small data packets.

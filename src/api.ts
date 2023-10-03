@@ -24,9 +24,9 @@ export {Version} from './Version';
 export {
     FuseAPI,
     TFuseAPIResponseData,
-    IFuseAPICallPacket,
-    TFuseAPICallbackHandler
+    IFuseAPICallPacket
 } from './FuseAPI';
+export {FuseCallbackManager, TFuseAPICallbackHandler} from './FuseCallbackManager';
 export {FuseAPIResponse} from './FuseAPIResponse';
 export {ContentType} from './ContentType';
 export {FuseResponseReader} from './FuseResponseReader';
