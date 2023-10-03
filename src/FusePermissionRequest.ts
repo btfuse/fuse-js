@@ -52,7 +52,7 @@ export type TFuseAPIPermissionRequest<T extends number = number> = TAPIBridgeFun
  * Concrete classes should implement the protected _request method to call on their
  * permission request Fuse API.
  */
-export class PermissionRequest<TSupportedPermission extends number> implements IFusePermissionRequest<TSupportedPermission> {
+export class FusePermissionRequest<TSupportedPermission extends number> implements IFusePermissionRequest<TSupportedPermission> {
     private static readonly TAG: string = 'PermissionRequest';
 
     private $api: TFuseAPIPermissionRequest<TSupportedPermission>;
@@ -61,7 +61,7 @@ export class PermissionRequest<TSupportedPermission extends number> implements I
 
     public constructor(apiBridge: TFuseAPIPermissionRequest<TSupportedPermission>, permissionSet: TSupportedPermission[], justificationHandler: TFuseJustificationHandler = null) {
         if (!permissionSet || (permissionSet && permissionSet.length === 0)) {
-            throw new FuseError(PermissionRequest.TAG, 'At least one permission is required');
+            throw new FuseError(FusePermissionRequest.TAG, 'At least one permission is required');
         }
 
         this.$api = apiBridge;

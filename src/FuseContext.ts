@@ -26,6 +26,10 @@ import {
     TResumeCallbackHandler
 } from './plugins/FuseRuntime';
 import {Version} from './Version';
+import {IFuseLogger} from './IFuseLogger';
+import {FuseLogger} from './FuseLogger';
+import { FuseLoggerFactory } from './FuseLoggerFactory';
+import { AbstractFuseLoggerFactory } from './AbstractFuseLoggerFactory';
 
 /**
  * A context class that holds Fuse Framework state
@@ -36,26 +40,60 @@ export class FuseContext {
     private $runtimeVersion: Version;
     private $runtimeInfo: IRuntimeInfo;
     private $defaultAPIFactory: AbstractFuseAPIFactory;
+    // private $defaultLogger: IFuseLogger;
+    private $logger: IFuseLogger;
 
-    public constructor() {
-        let presolver: PlatformResolver = this._createPlatformResolver();
-        this.$platform = presolver.resolve();
+    public constructor(
+        platform: Platform,
+        apiFactory: AbstractFuseAPIFactory,
+        loggerFactory: AbstractFuseLoggerFactory
+    ) {
+        // let presolver: PlatformResolver = this._createPlatformResolver();
+        // this.$platform = presolver.resolve();
+        this.$platform = platform;
+
+        // let loggerFactory: FuseLoggerFactory = new FuseLoggerFactory(this.$platform);
+
+        this.$logger = loggerFactory.create();
+        // this.$logger = this._createLogger();
+        
+        // if (!this.$logger) {
+        //     this.$logger = this.$defaultLogger
+        // }
+        
         this.$runtimeVersion = null;
-        this.$defaultAPIFactory = this._createFuseAPIFactory();
+        this.$defaultAPIFactory = apiFactory;
+        // this.$defaultAPIFactory = this._createFuseAPIFactory();
         this.$runtime = new FuseRuntime(this);
+    }
+
+    // protected _createLogger(): IFuseLogger | null {
+    //     return null
+    // }
+
+    // public setLogger(logger: IFuseLogger | null): void {
+    //     if (!logger) {
+    //         logger = this.$defaultLogger;
+    //     }
+
+    //     this.$logger = logger;
+    // }
+
+    public getLogger(): IFuseLogger {
+        return this.$logger;
     }
 
     public getDefaultAPIFactory(): AbstractFuseAPIFactory {
         return this.$defaultAPIFactory;
     }
 
-    protected _createFuseAPIFactory(): AbstractFuseAPIFactory {
-        return new FuseAPIFactory();
-    }
+    // protected _createFuseAPIFactory(): AbstractFuseAPIFactory {
+    //     return new FuseAPIFactory();
+    // }
 
-    protected _createPlatformResolver(): PlatformResolver {
-        return new PlatformResolver();
-    }
+    // protected _createPlatformResolver(): PlatformResolver {
+    //     return new PlatformResolver();
+    // }
 
     public getPlatform(): Platform {
         return this.$platform;

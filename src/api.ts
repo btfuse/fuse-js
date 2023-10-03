@@ -19,6 +19,7 @@ limitations under the License.
 export {Platform} from './Platform';
 export {PlatformResolver} from './PlatformResolver';
 export {FuseContext} from './FuseContext';
+export {FuseContextBuilder} from './FuseContextBuilder';
 export {Version} from './Version';
 export {
     FuseAPI,
@@ -41,12 +42,6 @@ export {FusePlugin, TAPIBridgeFunction} from './FusePlugin';
 export {HTTPFuseAPI} from './HTTPFuseAPI';
 export {FuseError} from './FuseError';
 
-// iOS Specific APIs / Implementations
-export {IOSSchemeFuseAPI} from './ios/IOSSchemeFuseAPI';
-
-// Android Specific APIs / Implementations
-export {AndroidSchemeFuseAPI} from './android/AndroidSchemeFuseAPI';
-
 // Utilities
 export {ISerializable} from './ISerializable';
 export {TSerializable, TFuseSerializable} from './TSerializable';
@@ -54,10 +49,25 @@ export {FuseSerializer} from './FuseSerializer';
 export {IFusePermissionRequest} from './IFusePermissionRequest';
 export {FusePermissionState} from './FusePermissionState';
 export {
-    PermissionRequest,
+    FusePermissionRequest,
     TFuseAPIPermissionRequest,
     TFuseJustificationHandler,
     TFusePermissionRequestArguments
 } from './FusePermissionRequest';
-export {IFuseGrantResults} from './IFuseGrantResults';
+export {IFuseGrantResult} from './IFuseGrantResult';
 export {FusePermissionGrantResult} from './FusePermissionGrantResult';
+
+// Logger
+export {FuseLoggerLevel} from './FuseLoggerLevel';
+export {IFuseLogger} from './IFuseLogger';
+export {FuseLogger, FuseLoggerSerializer} from './FuseLogger';
+export {AbstractFuseLoggerFactory} from './AbstractFuseLoggerFactory';
+export {FuseLoggerFactory} from './FuseLoggerFactory';
+
+// iOS Specific APIs / Implementations
+export {IOSSchemeFuseAPI} from './ios/IOSSchemeFuseAPI';
+export {IOSFuseLogger} from './ios/IOSFuseLogger';
+
+// Android Specific APIs / Implementations
+export {AndroidSchemeFuseAPI} from './android/AndroidSchemeFuseAPI';
+export {AndroidFuseLogger} from './android/AndroidFuseLogger';

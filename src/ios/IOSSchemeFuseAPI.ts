@@ -17,21 +17,6 @@ limitations under the License.
 
 import {HTTPFuseAPI} from '../HTTPFuseAPI';
 
-declare global {
-    interface Window {
-        webkit: {
-            messageHandlers: {
-                getAPIPort: {
-                    postMessage: (unused: "") => number;
-                },
-                getAPISecret: {
-                    postMessage: (unused: "") => string;
-                }
-            }
-        }
-    }
-}
-
 /**
  * A Fuse API implementation for iOS that uses WKURLSchemeHandler to bridge the JS and Native API calls.
  */

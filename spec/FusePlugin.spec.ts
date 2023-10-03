@@ -18,7 +18,8 @@ limitations under the License.
 import {
     FusePlugin,
     FuseTestAPI,
-    FuseTestContext
+    FuseContext,
+    FuseTestContextBuilder
 } from '../src/test/api';
 
 class TestPlugin extends FusePlugin {
@@ -36,12 +37,13 @@ class TestPlugin extends FusePlugin {
 }
 
 describe('FusePlugin', () => {
-    let context: FuseTestContext = null;
+    let context: FuseContext = null;
     let plugin: TestPlugin = null;
     let api: FuseTestAPI = null;
 
-    beforeAll(() => {
-        context = new FuseTestContext();
+    beforeAll(async () => {
+        let builder: FuseTestContextBuilder = new FuseTestContextBuilder();
+        context = await builder.build();
         plugin = new TestPlugin(context);
         api = plugin.getAPI();
         

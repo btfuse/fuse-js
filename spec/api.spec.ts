@@ -17,68 +17,179 @@ limitations under the License.
 
 import * as api from '../src/api';
 import {AbstractFuseAPIFactory} from '../src/AbstractFuseAPIFactory';
-import {FuseAPI} from '../src/FuseAPI';
-import {FuseContext} from '../src/FuseContext';
-import {FusePlugin} from '../src/FusePlugin';
-import {FuseResponseReader} from '../src/FuseResponseReader';
+import {AbstractFuseLoggerFactory} from '../src/AbstractFuseLoggerFactory';
+import {ContentType} from '../src/ContentType';
+import {
+    FuseAPI
+} from '../src/FuseAPI';
 import {FuseAPIFactory} from '../src/FuseAPIFactory';
+import {FuseAPIResponse} from '../src/FuseAPIResponse';
+import {FuseContext} from '../src/FuseContext';
+import {FuseContextBuilder} from '../src/FuseContextBuilder';
+import {FuseError} from '../src/FuseError';
+import {
+    FuseLogger,
+    FuseLoggerSerializer
+} from '../src/FuseLogger';
+import {FuseLoggerFactory} from '../src/FuseLoggerFactory';
+import {FuseLoggerLevel} from '../src/FuseLoggerLevel';
+import {FusePermissionGrantResult} from '../src/FusePermissionGrantResult';
+import {
+    FusePermissionRequest
+} from '../src/FusePermissionRequest';
+import {FusePermissionState} from '../src/FusePermissionState';
+import {
+    FusePlugin
+} from '../src/FusePlugin';
+import {FuseResponseReader} from '../src/FuseResponseReader';
+import {FuseSerializer} from '../src/FuseSerializer';
 import {HTTPFuseAPI} from '../src/HTTPFuseAPI';
 import {Platform} from '../src/Platform';
 import {PlatformResolver} from '../src/PlatformResolver';
 import {Version} from '../src/Version';
-import {ContentType} from '../src/ContentType';
-import {FuseError} from '../src/FuseError';
-import {FuseAPIResponse} from '../src/FuseAPIResponse';
-import {FusePermissionState} from '../src/FusePermissionState';
-import {PermissionRequest} from '../src/FusePermissionRequest';
+
+import * as testAPI from '../src/test/api';
+import {FuseTestAPI} from '../src/test/FuseTestAPI';
+import {FuseTestAPIFactory} from '../src/test/FuseTestAPIFactory';
+import {FuseTestContextBuilder} from '../src/test/FuseTestContextBuilder';
+import {FuseTestPlataformResolver} from '../src/test/FuseTestPlatformResolver';
+import {IOSFuseLogger} from '../src/ios/IOSFuseLogger';
+import {IOSSchemeFuseAPI} from '../src/ios/IOSSchemeFuseAPI';
+import {AndroidFuseLogger} from '../src/android/AndroidFuseLogger';
+import {AndroidSchemeFuseAPI} from '../src/android/AndroidSchemeFuseAPI';
 
 describe('Public API', () => {
-    it('PermissionRequest', () => {
-        expect(api.PermissionRequest).toBe(PermissionRequest);
-    });
-
-    it('PermissionStatus', () => {
-        expect(api.FusePermissionState).toBe(FusePermissionState);
-    });
 
     it('AbstractFuseAPIFactory', () => {
         expect(api.AbstractFuseAPIFactory).toBe(AbstractFuseAPIFactory);
     });
 
-    it('FuseError', () => {
-        expect(api.FuseError).toBe(FuseError);
-    });
-
-    it('FuseAPIResponse', () => {
-        expect(api.FuseAPIResponse).toBe(FuseAPIResponse);
+    it('AbstractFuseLoggerFactory', () => {
+        expect(api.AbstractFuseLoggerFactory).toBe(AbstractFuseLoggerFactory);
     });
 
     it('ContentType', () => {
         expect(api.ContentType).toBe(ContentType);
     });
 
-    it('FuseAPI', () => {
-        expect(api.FuseAPI).toBe(FuseAPI);
-    });
-
-    it('FuseContext', () => {
-        expect(api.FuseContext).toBe(FuseContext);
-    });
-
-    it('FusePlugin', () => {
-        expect(api.FusePlugin).toBe(FusePlugin);
-    });
-
-    it('FuseResponseReader', () => {
-        expect(api.FuseResponseReader).toBe(FuseResponseReader);
+    describe('Fuse API', () => {
+        it('FuseAPI', () => {
+            expect(api.FuseAPI).toBe(FuseAPI);
+        });
+    
+        it('TFuseAPICallbackHandler', () => {
+            let test: api.TFuseAPICallbackHandler = null;
+        });
+    
+        it('IFuseAPICallPacket', () => {
+            let test: api.IFuseAPICallPacket = null;
+        });
+    
+        it('TFuseAPIResponseData', () => {
+            let test: api.TFuseAPIResponseData = null;
+        });
     });
 
     it('FuseAPIFactory', () => {
         expect(api.FuseAPIFactory).toBe(FuseAPIFactory);
     });
 
+    it('FuseAPIResponse', () => {
+        expect(api.FuseAPIResponse).toBe(FuseAPIResponse);
+    });
+
+    it('FuseContext', () => {
+        expect(api.FuseContext).toBe(FuseContext);
+    });
+
+    it('FuseContextBuilder', () => {
+        expect(api.FuseContextBuilder).toBe(FuseContextBuilder);
+    });
+
+    it('FuseError', () => {
+        expect(api.FuseError).toBe(FuseError);
+    });
+
+    describe('FuseLogger', () => {
+        it('FuseLogger', () => {
+            expect(api.FuseLogger).toBe(FuseLogger);
+        });
+
+        it('FuseLoggerSerializer', () => {
+            expect(api.FuseLoggerSerializer).toBe(FuseLoggerSerializer);
+        });
+    });
+    
+    it('FuseLoggerFactory', () => {
+        expect(api.FuseLoggerFactory).toBe(FuseLoggerFactory);
+    });
+
+    it('FuseLoggerLevel', () => {
+        expect(api.FuseLoggerLevel).toBe(FuseLoggerLevel);
+    });
+
+    it('FusePermissionGrantResult', () => {
+        expect(api.FusePermissionGrantResult).toBe(FusePermissionGrantResult);
+    });
+
+    describe('FusePermissionRequest', () => {
+        it('FusePermissionRequest', () => {
+            expect(api.FusePermissionRequest).toBe(FusePermissionRequest);
+        });
+
+        it('TFuseAPIPermissionRequest', () => {
+            let test: api.TFuseAPIPermissionRequest = null;
+        });
+
+        it('TFuseJustificationHandler', () => {
+            let test: api.TFuseJustificationHandler = null;
+        });
+
+        it('TFusePermissionRequestArguments', () => {
+            let test: api.TFusePermissionRequestArguments<number> = null;
+        });
+    });
+
+    it('FusePermissionStatus', () => {
+        expect(api.FusePermissionState).toBe(FusePermissionState);
+    });
+    
+    describe('FusePlugin', () => {
+        it('FusePlugin', () => {
+            expect(api.FusePlugin).toBe(FusePlugin);
+        });
+
+        it('TAPIBridgeFunction', () => {
+            let test: api.TAPIBridgeFunction = null;
+        });
+    });
+
+    it('FuseResponseReader', () => {
+        expect(api.FuseResponseReader).toBe(FuseResponseReader);
+    });
+
+    it('FuseSerializer', () => {
+        expect(api.FuseSerializer).toBe(FuseSerializer);
+    });
+
     it('HTTPFuseAPI', () => {
         expect(api.HTTPFuseAPI).toBe(HTTPFuseAPI);
+    });
+
+    it('IFuseGrantResult', () => {
+        let test: api.IFuseGrantResult<number> = null;
+    });
+
+    it('IFuseLogger', () => {
+        let test: api.IFuseLogger = null;
+    });
+
+    it('IFusePermissionRequest', () => {
+        let test: api.IFusePermissionRequest = null;
+    });
+
+    it('ISerializable', () => {
+        let test: api.ISerializable = null; 
     });
 
     it('Platform', () => {
@@ -89,7 +200,55 @@ describe('Public API', () => {
         expect(api.PlatformResolver).toBe(PlatformResolver);
     });
 
+    describe('TSerializable', () => {
+        it('TSerializable', () => {
+            let test: api.TSerializable = null;
+        });
+    
+        it('TFuseSerializable', () => {
+            let test: api.TFuseSerializable<number> = null;
+        });
+    });
+
     it('Version', () => {
         expect(api.Version).toBe(Version);
+    });
+
+    describe('iOS Public APIs', () => {
+        it('IOSFuseLogger', () => {
+            expect(api.IOSFuseLogger).toBe(IOSFuseLogger);
+        });
+
+        it('IOSSchemeFuseAPI', () => {
+            expect(api.IOSSchemeFuseAPI).toBe(IOSSchemeFuseAPI);
+        });
+    });
+
+    describe('Android Public APIs', () => {
+        it('AndroidFuseLogger', () => {
+            expect(api.AndroidFuseLogger).toBe(AndroidFuseLogger);
+        });
+
+        it('IOSSchemeFuseAPI', () => {
+            expect(api.AndroidSchemeFuseAPI).toBe(AndroidSchemeFuseAPI);
+        });
+    });
+
+    describe('Public Test APIs', () => {
+        it('FuseTestAPI', () => {
+            expect(testAPI.FuseTestAPI).toBe(FuseTestAPI);
+        });
+
+        it('FuseTestAPIFactory', () => {
+            expect(testAPI.FuseTestAPIFactory).toBe(FuseTestAPIFactory);
+        });
+
+        it('FuseTestContextBuilder', () => {
+            expect(testAPI.FuseTestContextBuilder).toBe(FuseTestContextBuilder);
+        });
+
+        it('FuseTestPlataformResolver', () => {
+            expect(testAPI.FuseTestPlataformResolver).toBe(FuseTestPlataformResolver);
+        });
     });
 });

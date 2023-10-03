@@ -15,10 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {HTTPFuseAPI} from '../api';
+import {FuseAPIResponse, HTTPFuseAPI} from '../api';
 
 export class FuseTestAPI extends HTTPFuseAPI {
     protected override async _getEndpoint(): Promise<string> {
         return `http://localhost:12345`;
+    }
+    
+    protected override _doRequest(xhr: XMLHttpRequest, data: Blob): Promise<FuseAPIResponse> {
+        return null;
     }
 }

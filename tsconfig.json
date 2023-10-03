@@ -106,12 +106,17 @@
       // "skipDefaultLibCheck": true,                      /* Skip type checking .d.ts files that are included with TypeScript. */
       "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
     },
+    "files": [
+      "./src/ios/internal/messageHandlers.d.ts",
+      "./src/android/internal/NBSNative.d.ts"
+    ],
     "include": [
       "./src/**/*.ts",
       "./src/*.ts"
     ],
     "exclude": [
-      "./lib"
+      "./lib",
+      "./spec"
     ]
   }
   

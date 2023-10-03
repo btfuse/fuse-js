@@ -15,17 +15,10 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {HTTPFuseAPI} from '../HTTPFuseAPI';
+import { IFuseLogger } from "./IFuseLogger";
 
-/**
- * A Fuse API implementation for an embedded HTTP server to bridge the JS and Native API calls.
- */
-export class AndroidSchemeFuseAPI extends HTTPFuseAPI {
-    protected override async _getEndpoint(): Promise<string> {
-        return `http://localhost:${window.NBSNative.getAPIPort()}`;
-    }
+export abstract class AbstractFuseLoggerFactory {
+    public constructor() {}
 
-    protected override async _initHeaders(xhr: XMLHttpRequest): Promise<void> {
-        xhr.setRequestHeader('X-Fuse-Secret', window.NBSNative.getAPISecret());
-    }
+    public abstract create(): IFuseLogger;
 }

@@ -15,17 +15,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {HTTPFuseAPI} from '../HTTPFuseAPI';
+import { FuseLoggerLevel } from "../../FuseLoggerLevel";
 
-/**
- * A Fuse API implementation for an embedded HTTP server to bridge the JS and Native API calls.
- */
-export class AndroidSchemeFuseAPI extends HTTPFuseAPI {
-    protected override async _getEndpoint(): Promise<string> {
-        return `http://localhost:${window.NBSNative.getAPIPort()}`;
-    }
-
-    protected override async _initHeaders(xhr: XMLHttpRequest): Promise<void> {
-        xhr.setRequestHeader('X-Fuse-Secret', window.NBSNative.getAPISecret());
+export declare global {
+    interface Window {
+        webkit: {
+            messageHandlers: {
+                getAPIPort: {
+                    postMessage: (unused: "") => Promise<number>;
+                },
+                getAPISecret: {
+                    postMessage: (unused: "") => Promise<string>;
+                },
+                log: {
+                    postMessage: (args: [FuseLoggerLevel: FuseLoggerLevel, string: message]) => void;
+                }
+            }
+        }
     }
 }

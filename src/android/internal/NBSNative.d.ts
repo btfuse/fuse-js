@@ -15,11 +15,14 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {FusePermissionState} from './FusePermissionState';
+import { FuseLoggerLevel } from "../../FuseLoggerLevel";
 
-// export type IFuseGrantResults<K extends number> = {
-//     [Key in keyof K]: FusePermissionState;
-// }
-export type IFuseGrantResults<K extends number> = {
-    [Key in K]: FusePermissionState;
+export declare global {
+    interface Window {
+        NBSNative: {
+            getAPIPort(): number;
+            getAPISecret(): string;
+            log(level: FuseLoggerLevel, message: string): void;
+        }
+    }
 }

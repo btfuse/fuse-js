@@ -15,15 +15,22 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { FuseSerializer } from "./FuseSerializer";
+import { ISerializable } from "./ISerializable";
+import { TFuseSerializable, TSerializable } from "./TSerializable";
+
 export type TFuseErrorCause = string | Error | FuseError | null;
 
-export interface IFuseErrorSerialized {
+interface _IFuseErrorSerialized {
     domain: string;
     message: string;
     code: number;
+    stack?: string;
 }
 
-export class FuseError extends Error {
+export type IFuseErrorSerialized = TFuseSerializable<_IFuseErrorSerialized>;
+
+export class FuseError extends Error implements ISerializable {
     private $domain: string;
     private $message: string;
     private $cause: TFuseErrorCause;
@@ -52,6 +59,15 @@ export class FuseError extends Error {
 
     public getCause(): TFuseErrorCause | null {
         return this.$cause;
+    }
+    
+    public serialize(): IFuseErrorSerialized {
+        return {
+            domain: this.getDomain(),
+            message: this.getMessage(),
+            code: this.getCode(),
+            stack: this.stack
+        };
     }
 
     public static wrap(error: string | Error | FuseError | IFuseErrorSerialized | unknown): FuseError {

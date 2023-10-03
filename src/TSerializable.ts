@@ -15,12 +15,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { FuseError } from './FuseError';
 import {ISerializable} from './ISerializable';
 
 /**
  * Type of supported serializable obejcts that can go over the Fuse API bridge.
  */
-export type TSerializable = string | Blob | ArrayBuffer| ISerializable<any> | number | boolean | Date | TSerializable[] | {[key: string]: TSerializable };
+export type TSerializable = FuseError | Error | string | Blob | ArrayBuffer| ISerializable<any> | number | boolean | Date | TSerializable[] | {[key: string]: TSerializable };
 
 /**
  * Utility type wrap, useful if you have a concrete interface of TSerializable properties.

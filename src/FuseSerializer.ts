@@ -1,5 +1,3 @@
-import { ISerializable } from "./ISerializable";
-import { TSerializable } from "./TSerializable";
 
 /*
 Copyright 2023 Norman Breau 
@@ -16,6 +14,10 @@ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 See the License for the specific language governing permissions and
 limitations under the License.
 */
+
+import { ISerializable } from "./ISerializable";
+import { TSerializable } from "./TSerializable";
+
 export class FuseSerializer {
     public constructor() {}
 
@@ -29,6 +31,9 @@ export class FuseSerializer {
         else if (this._isISerializable(obj)) {
             return this._serializeToString(obj.serialize());
         }
+        else if (obj instanceof Error) {
+            return this._serializeErrorToString(obj);
+        }
 
         // When all else fails, attempt to JSON stringify
         return JSON.stringify(obj);
@@ -36,6 +41,16 @@ export class FuseSerializer {
 
     protected _serializePrimitiveToString(obj: number | string | boolean): string {
         return obj.toString();
+    }
+
+    protected _serializeErrorToString(obj: Error): string {
+        let serializedError = {
+            name: obj.name,
+            message: obj.message,
+            stack: obj.stack
+        };
+
+        return JSON.stringify(serializedError, null, 4);
     }
 
     protected _serializeDateToString(obj: Date): string {

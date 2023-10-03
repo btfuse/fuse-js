@@ -16,13 +16,13 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
-import {IFuseGrantResults} from './IFuseGrantResults';
+import {IFuseGrantResult} from './IFuseGrantResult';
 import {FusePermissionState} from './FusePermissionState';
 
 export class FusePermissionGrantResult<TSupportedPermission extends number = number> {
-    private $results: IFuseGrantResults<TSupportedPermission>;
+    private $results: IFuseGrantResult<TSupportedPermission>;
 
-    public constructor(results: IFuseGrantResults<TSupportedPermission>) {
+    public constructor(results: IFuseGrantResult<TSupportedPermission>) {
         this.$results = results;
     }
 
