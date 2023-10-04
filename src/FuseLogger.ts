@@ -16,7 +16,7 @@ limitations under the License.
 */
 
 import {
-    IFuseLogger
+    IFuseLogger, INativeLogEntry
 } from './IFuseLogger';
 import {TSerializable} from './TSerializable';
 import {ISerializable} from './ISerializable';
@@ -110,7 +110,10 @@ export class FuseLogger implements IFuseLogger {
         this.$enableNativeBridge = true;
         this.$level = FuseLoggerLevel.INFO | FuseLoggerLevel.WARN | FuseLoggerLevel.ERROR;
         this.$serializer = new FuseLoggerSerializer();
+        this._registerNativeCalblack();
     }
+
+    protected _registerNativeCalblack(): void {}
 
     public setLevel(level: FuseLoggerLevel): void {
         this.$level = level;
@@ -122,6 +125,31 @@ export class FuseLogger implements IFuseLogger {
 
     public enableNativeBridge(flag: boolean): void {
         this.$enableNativeBridge = !!flag;
+    }
+
+    protected _onNativeLogEntry(entry: INativeLogEntry): void {
+        if (!(this.getLevel() & entry.level)) {
+            return;
+        }
+
+        if (entry.level === FuseLoggerLevel.SILENT) {
+            return;
+        }
+
+        switch (entry.level) {
+            case FuseLoggerLevel.DEBUG:
+                console.debug(entry.message);
+                break;
+            case FuseLoggerLevel.INFO:
+                console.info(entry.message);
+                break;
+            case FuseLoggerLevel.WARN:
+                console.warn(entry.message);
+                break;
+            case FuseLoggerLevel.ERROR:
+                console.error(entry.message);
+                break;
+        }
     }
 
     /**
@@ -149,7 +177,7 @@ export class FuseLogger implements IFuseLogger {
             return;
         }
 
-        console.log(...args);
+        console.debug(...args);
         this.$logToNative(FuseLoggerLevel.DEBUG, args);
     }
 

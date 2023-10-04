@@ -15,11 +15,27 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+import { INativeLogEntry } from '../IFuseLogger';
 import {FuseLogger} from '../FuseLogger';
 import {FuseLoggerLevel} from '../FuseLoggerLevel';
+import { FuseCallbackManager } from '../FuseCallbackManager';
 
 export class AndroidFuseLogger extends FuseLogger {
     protected override _logToNative(level: FuseLoggerLevel, message: string): void {
         window.NBSNative.log(level, message);
+    }
+
+    protected override _registerNativeCalblack(): void {
+        window.NBSNative.setLogCallback(FuseCallbackManager.getInstance().createCallback((payload: string) => {
+            let entry: INativeLogEntry = null;
+            try {
+                entry = JSON.parse(payload);
+            }
+            catch (ex) {
+                return;
+            }
+
+            this._onNativeLogEntry(entry);
+        }));
     }
 }

@@ -23,6 +23,7 @@ export declare global {
             getAPIPort(): number;
             getAPISecret(): string;
             log(level: FuseLoggerLevel, message: string): void;
+            setLogCallback(callbackID: string): void;
         }
     }
 }

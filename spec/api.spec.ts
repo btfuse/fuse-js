@@ -41,7 +41,7 @@ import {FusePermissionState} from '../src/FusePermissionState';
 import {
     FusePlugin
 } from '../src/FusePlugin';
-import {FuseCallbackManager, TFuseAPICallbackHandler} from '../src/FuseCallbackManager';
+import {FuseCallbackManager} from '../src/FuseCallbackManager';
 import {FuseResponseReader} from '../src/FuseResponseReader';
 import {FuseSerializer} from '../src/FuseSerializer';
 import {HTTPFuseAPI} from '../src/HTTPFuseAPI';
@@ -193,6 +193,10 @@ describe('Public API', () => {
 
     it('IFuseLogger', () => {
         let test: api.IFuseLogger = null;
+    });
+
+    it('INativeLogEntry', () => {
+        let test: api.INativeLogEntry = null;
     });
 
     it('IFusePermissionRequest', () => {

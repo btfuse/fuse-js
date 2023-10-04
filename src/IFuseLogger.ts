@@ -18,6 +18,11 @@ limitations under the License.
 import { FuseLoggerLevel } from './FuseLoggerLevel';
 import {TSerializable} from './TSerializable';
 
+export interface INativeLogEntry {
+    level: FuseLoggerLevel;
+    message: string;
+}
+
 export interface IFuseLogger {
     /**
      * If enabled, log calls will also be sent to the native environment and logged in the native

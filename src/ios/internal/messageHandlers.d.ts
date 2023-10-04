@@ -30,6 +30,9 @@ export declare global {
                 log: {
                     postMessage: (args: [FuseLoggerLevel: FuseLoggerLevel, string: message]) => void;
                 }
+                setLogCallback: {
+                    postMessage: (callbackID: string) => void;
+                }
             }
         }
     }

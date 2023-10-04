@@ -59,7 +59,7 @@ export {FusePermissionGrantResult} from './FusePermissionGrantResult';
 
 // Logger
 export {FuseLoggerLevel} from './FuseLoggerLevel';
-export {IFuseLogger} from './IFuseLogger';
+export {IFuseLogger, INativeLogEntry} from './IFuseLogger';
 export {FuseLogger, FuseLoggerSerializer} from './FuseLogger';
 export {AbstractFuseLoggerFactory} from './AbstractFuseLoggerFactory';
 export {FuseLoggerFactory} from './FuseLoggerFactory';
