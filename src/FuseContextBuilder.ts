@@ -20,6 +20,7 @@ import { AbstractFuseLoggerFactory } from "./AbstractFuseLoggerFactory";
 import { FuseAPIFactory } from "./FuseAPIFactory";
 import { FuseContext } from "./FuseContext";
 import { FuseLoggerFactory } from "./FuseLoggerFactory";
+import { FuseLoggerLevel } from "./FuseLoggerLevel";
 import { IFuseLogger } from "./IFuseLogger";
 import { Platform } from "./Platform";
 import { PlatformResolver } from "./PlatformResolver";
@@ -78,6 +79,9 @@ export class FuseContextBuilder {
         let isDebugMode: boolean = await this._isDebugMode(context);
         let logger: IFuseLogger = context.getLogger();
         logger.enableNativeBridge(isDebugMode);
+        let level: FuseLoggerLevel = logger.getLevel();
+        level |= FuseLoggerLevel.DEBUG;
+        logger.setLevel(level);
 
         return context;
     }
