@@ -1,15 +1,13 @@
 {
-    "name": "@nbsfuse/core",
+    "name": "@btfuse/core",
     "version": "0.6.0",
     "description": "A native-first framework for building hybdrid web-native applications",
     "main": "lib/api.js",
     "types": "lib/api.d.ts",
-    "homepage": "https://github.com/nbsfuse/fuse",
+    "homepage": "https://github.com/btfuse/fuse",
     "keywords": [
-        "NBS",
-        "NBSolutions",
         "Fuse",
-        "NBSFuse",
+        "breautek",
         "native",
         "mobile",
         "app",
@@ -28,9 +26,9 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/nbsfuse/fuse"
+        "url": "https://github.com/btfuse/fuse"
     },
-    "author": "norman@nbsolutions.ca",
+    "author": "norman@breautek.com",
     "license": "Apache-2.0",
     "devDependencies": {
         "@types/jest": "^29.5.4",
