@@ -1,6 +1,6 @@
 
 /*
-Copyright 2023 Norman Breau 
+Copyright 2023 Breautek
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,10 +22,10 @@ import {HTTPFuseAPI} from '../HTTPFuseAPI';
  */
 export class AndroidSchemeFuseAPI extends HTTPFuseAPI {
     protected override async _getEndpoint(): Promise<string> {
-        return `http://localhost:${window.NBSNative.getAPIPort()}`;
+        return `http://localhost:${window.BTFuseNative.getAPIPort()}`;
     }
 
     protected override async _initHeaders(xhr: XMLHttpRequest): Promise<void> {
-        xhr.setRequestHeader('X-Fuse-Secret', window.NBSNative.getAPISecret());
+        xhr.setRequestHeader('X-Fuse-Secret', window.BTFuseNative.getAPISecret());
     }
 }

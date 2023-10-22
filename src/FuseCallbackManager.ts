@@ -1,6 +1,6 @@
 
 /*
-Copyright 2023 Norman Breau 
+Copyright 2023 Breautek
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,11 +22,11 @@ import * as UUID from 'uuid';
 
 export type TFuseAPICallbackHandler = (data: string) => void;
 
-window.__nbsfuse_callbacks = new Map<string, TNativeCallbackFunction>();
+window.__btfuse_callbacks = new Map<string, TNativeCallbackFunction>();
 
-window.__nbsfuse_doCallback = function(callbackID: string, data: string) {
-    if (callbackID && window.__nbsfuse_callbacks.has(callbackID)) {
-        window.__nbsfuse_callbacks.get(callbackID)(data);
+window.__btfuse_doCallback = function(callbackID: string, data: string) {
+    if (callbackID && window.__btfuse_callbacks.has(callbackID)) {
+        window.__btfuse_callbacks.get(callbackID)(data);
     }
 };
 
@@ -58,7 +58,7 @@ export class FuseCallbackManager {
 
     public createCallback(cb: TFuseAPICallbackHandler): string {
         let id: string = UUID.v4();
-        window.__nbsfuse_callbacks.set(id, (data: string): void => {
+        window.__btfuse_callbacks.set(id, (data: string): void => {
             cb(data);
         });
 
@@ -66,6 +66,6 @@ export class FuseCallbackManager {
     }
 
     public releaseCallback(id: string): void {
-        window.__nbsfuse_callbacks.delete(id);
+        window.__btfuse_callbacks.delete(id);
     }
 }

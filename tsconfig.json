@@ -108,7 +108,7 @@
     },
     "files": [
       "./src/ios/internal/messageHandlers.d.ts",
-      "./src/android/internal/NBSNative.d.ts"
+      "./src/android/internal/BTFuseNative.d.ts"
     ],
     "include": [
       "./src/**/*.ts",

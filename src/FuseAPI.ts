@@ -1,6 +1,6 @@
 
 /*
-Copyright 2023 Norman Breau 
+Copyright 2023 Breautek
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -21,17 +21,6 @@ import { FuseSerializer } from './FuseSerializer';
 import { FuseCallbackManager, TFuseAPICallbackHandler } from './FuseCallbackManager';
 
 /**
- * The primitive data types that the API supports
- */
-// export type TFuseAPISupportedArgPrimitives = string | number | boolean | Blob | ArrayBuffer;
-
-/**
- * Supported argument types, which can be any of TFuseAPISupportedArgPrimitives, or a recursive object or array structure of TFuseAPISupportedArgPrimitives
- */
-// export type TFuseAPIArgs = TFuseAPISupportedArgPrimitives | RArray<TFuseAPISupportedArgPrimitives | RObj<TFuseAPISupportedArgPrimitives>> | RObj<TFuseAPISupportedArgPrimitives | RArray<TFuseAPISupportedArgPrimitives>>;
-// export type TFuseAPIArgs = Blob;
-
-/**
  * Generic API response data type
  */
 export interface TFuseAPIResponseData {
@@ -45,8 +34,6 @@ export interface IFuseAPICallPacket {
     body: Blob;
     contentType: string;
 }
-
-
 
 /**
  * Base class for the Fuse API bridge for exchanging data with the native platform

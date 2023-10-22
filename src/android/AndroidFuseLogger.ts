@@ -1,6 +1,6 @@
 
 /*
-Copyright 2023 Norman Breau 
+Copyright 2023 Breautek
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -22,11 +22,11 @@ import { FuseCallbackManager } from '../FuseCallbackManager';
 
 export class AndroidFuseLogger extends FuseLogger {
     protected override _logToNative(level: FuseLoggerLevel, message: string): void {
-        window.NBSNative.log(level, message);
+        window.BTFuseNative.log(level, message);
     }
 
     protected override _registerNativeCalblack(): void {
-        window.NBSNative.setLogCallback(FuseCallbackManager.getInstance().createCallback((payload: string) => {
+        window.BTFuseNative.setLogCallback(FuseCallbackManager.getInstance().createCallback((payload: string) => {
             let entry: INativeLogEntry = null;
             try {
                 entry = JSON.parse(payload);

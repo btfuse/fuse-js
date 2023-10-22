@@ -1,6 +1,6 @@
 
 /*
-Copyright 2023 Norman Breau 
+Copyright 2023 Breautek
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -33,7 +33,7 @@ export class PlatformResolver {
     }
 
     public isIOSEnvironment(): boolean {
-        return location.protocol === 'nbsfuse:';
+        return location.protocol === 'btfuse:';
     }
 
     public isAndroidEnvironment() {

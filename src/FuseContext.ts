@@ -1,6 +1,6 @@
 
 /*
-Copyright 2023 Norman Breau 
+Copyright 2023 Breautek
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
@@ -16,9 +16,7 @@ limitations under the License.
 */
 
 import { AbstractFuseAPIFactory } from './AbstractFuseAPIFactory';
-import { FuseAPIFactory } from './FuseAPIFactory';
 import { Platform } from "./Platform";
-import { PlatformResolver } from "./PlatformResolver";
 import {
     FuseRuntime,
     IRuntimeInfo,
@@ -27,8 +25,6 @@ import {
 } from './plugins/FuseRuntime';
 import {Version} from './Version';
 import {IFuseLogger} from './IFuseLogger';
-import {FuseLogger} from './FuseLogger';
-import { FuseLoggerFactory } from './FuseLoggerFactory';
 import { AbstractFuseLoggerFactory } from './AbstractFuseLoggerFactory';
 
 /**
@@ -48,36 +44,13 @@ export class FuseContext {
         apiFactory: AbstractFuseAPIFactory,
         loggerFactory: AbstractFuseLoggerFactory
     ) {
-        // let presolver: PlatformResolver = this._createPlatformResolver();
-        // this.$platform = presolver.resolve();
         this.$platform = platform;
-
-        // let loggerFactory: FuseLoggerFactory = new FuseLoggerFactory(this.$platform);
-
         this.$logger = loggerFactory.create();
-        // this.$logger = this._createLogger();
-        
-        // if (!this.$logger) {
-        //     this.$logger = this.$defaultLogger
-        // }
         
         this.$runtimeVersion = null;
         this.$defaultAPIFactory = apiFactory;
-        // this.$defaultAPIFactory = this._createFuseAPIFactory();
         this.$runtime = new FuseRuntime(this);
     }
-
-    // protected _createLogger(): IFuseLogger | null {
-    //     return null
-    // }
-
-    // public setLogger(logger: IFuseLogger | null): void {
-    //     if (!logger) {
-    //         logger = this.$defaultLogger;
-    //     }
-
-    //     this.$logger = logger;
-    // }
 
     public getLogger(): IFuseLogger {
         return this.$logger;
@@ -86,14 +59,6 @@ export class FuseContext {
     public getDefaultAPIFactory(): AbstractFuseAPIFactory {
         return this.$defaultAPIFactory;
     }
-
-    // protected _createFuseAPIFactory(): AbstractFuseAPIFactory {
-    //     return new FuseAPIFactory();
-    // }
-
-    // protected _createPlatformResolver(): PlatformResolver {
-    //     return new PlatformResolver();
-    // }
 
     public getPlatform(): Platform {
         return this.$platform;
