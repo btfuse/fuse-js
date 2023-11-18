@@ -22,7 +22,7 @@ import {HTTPFuseAPI} from '../HTTPFuseAPI';
  */
 export class AndroidSchemeFuseAPI extends HTTPFuseAPI {
     protected override async _getEndpoint(): Promise<string> {
-        return `http://localhost:${window.BTFuseNative.getAPIPort()}`;
+        return `https://localhost:${window.BTFuseNative.getAPIPort()}`;
     }
 
     protected override async _initHeaders(xhr: XMLHttpRequest): Promise<void> {
