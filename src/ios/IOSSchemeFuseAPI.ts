@@ -22,7 +22,7 @@ import {HTTPFuseAPI} from '../HTTPFuseAPI';
  */
 export class IOSSchemeFuseAPI extends HTTPFuseAPI {
     protected override async _getEndpoint(): Promise<string> {
-        return `http://localhost:${await window.webkit.messageHandlers.getAPIPort.postMessage("")}`;
+        return `https://localhost:${await window.webkit.messageHandlers.getAPIPort.postMessage("")}`;
     }
 
     protected override async _initHeaders(xhr: XMLHttpRequest): Promise<void> {
