@@ -1,5 +1,5 @@
 
-name: Unit Tests
+name: FuseJS Runtime
 
 on:
   push:
