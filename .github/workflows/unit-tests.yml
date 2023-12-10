@@ -1,0 +1,23 @@
+
+name: Unit Tests
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  unit-test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node_versions: [18.x, 20.x]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node_version }}
+      - run: npm ci
+      - run: npm build
+      - run: npm test
