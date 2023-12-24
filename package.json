@@ -5,6 +5,10 @@
     "main": "lib/api.js",
     "types": "lib/api.d.ts",
     "homepage": "https://github.com/btfuse/fuse",
+    "publishConfig": {
+	"registry": "https://registry.npmjs.org",
+	"access": "public"
+    },
     "keywords": [
         "Fuse",
         "breautek",
