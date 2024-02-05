@@ -57,7 +57,7 @@ export class FuseCallbackManager {
     }
 
     public createCallback(cb: TFuseAPICallbackHandler): string {
-        let id: string = UUID.v4();
+        const id: string = UUID.v4();
         window.__btfuse_callbacks.set(id, (data: string): void => {
             cb(data);
         });

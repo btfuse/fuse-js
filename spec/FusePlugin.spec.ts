@@ -42,17 +42,18 @@ describe('FusePlugin', () => {
     let api: FuseTestAPI = null;
 
     beforeAll(async () => {
-        let builder: FuseTestContextBuilder = new FuseTestContextBuilder();
+        const builder: FuseTestContextBuilder = new FuseTestContextBuilder();
         context = await builder.build();
         plugin = new TestPlugin(context);
         api = plugin.getAPI();
         
         // Don't actually try to make network requests.
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         jest.spyOn(<any>api, '_doRequest').mockReturnValue(Promise.resolve());
     });
 
     it('should form proper url', async () => {
-        let route: string = await api.buildRoute('test-plugin', '/test-action');
+        const route: string = await api.buildRoute('test-plugin', '/test-action');
         expect(route).toBe('http://localhost:12345/api/test-plugin/test-action');
     });
 });

@@ -26,7 +26,7 @@ export abstract class AbstractFuseAPIFactory {
     /**
      * Implement a create API that returns a FuseAPI for the given Platform
      * 
-     * @param platform 
+     * @param platform - The current platform runtime
      */
     public abstract create(platform: Platform): FuseAPI;
 }

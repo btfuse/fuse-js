@@ -19,18 +19,18 @@ import {FuseError} from '../src/FuseError';
 
 describe('FuseError', () => {
     it('should identify as FuseError via toString', () => {
-        let ferr: FuseError = new FuseError('', '');
+        const ferr: FuseError = new FuseError('', '');
         expect(ferr.toString()).toBe('FuseError');
     });
 
     it('should identify as FuseError via name', () => {
-        let ferr: FuseError = new FuseError('', '');
+        const ferr: FuseError = new FuseError('', '');
         expect(ferr.name).toBe('FuseError');
     });
 
     describe('Error Wrapping', () => {
         it('can wrap strings', () => {
-            let ferr: FuseError = FuseError.wrap('test string error');
+            const ferr: FuseError = FuseError.wrap('test string error');
             expect(ferr.getDomain()).toBe('Unknown');
             expect(ferr.getMessage()).toBe('test string error');
             expect(ferr.getMessage()).toBe(ferr.message);
@@ -38,8 +38,8 @@ describe('FuseError', () => {
         });
 
         it('can wrap Error', () => {
-            let origError: Error = new Error('test error');
-            let ferr: FuseError = FuseError.wrap(origError);
+            const origError: Error = new Error('test error');
+            const ferr: FuseError = FuseError.wrap(origError);
             expect(ferr.getDomain()).toBe('Error');
             expect(ferr.getMessage()).toBe('test error');
             expect(ferr.getMessage()).toBe(ferr.message);
@@ -48,8 +48,8 @@ describe('FuseError', () => {
         });
 
         it('can wrap FuseError', () => {
-            let origError: FuseError = new FuseError('domain', 'test error');
-            let ferr: FuseError = FuseError.wrap(origError);
+            const origError: FuseError = new FuseError('domain', 'test error');
+            const ferr: FuseError = FuseError.wrap(origError);
             expect(ferr.getDomain()).toBe('domain');
             expect(ferr.getMessage()).toBe('test error');
             expect(ferr.getMessage()).toBe(ferr.message);
@@ -58,7 +58,7 @@ describe('FuseError', () => {
         });
 
         it('can wrap serialized fuse errors', () => {
-            let ferr: FuseError = FuseError.wrap({
+            const ferr: FuseError = FuseError.wrap({
                 domain: 'domain',
                 message: 'test error',
                 code: 1

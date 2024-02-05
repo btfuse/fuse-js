@@ -32,7 +32,7 @@ export type TSerializable = Error |
                             string |
                             Blob |
                             ArrayBuffer |
-                            ISerializable<any> |
+                            ISerializable<TSerializable> |
                             number |
                             boolean |
                             Date | TSerializable[] | {[key: string]: TSerializable };

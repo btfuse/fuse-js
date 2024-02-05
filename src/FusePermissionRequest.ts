@@ -74,7 +74,7 @@ export class FusePermissionRequest<TSupportedPermission extends number> implemen
     }
 
     private async $request(isJustified: boolean): Promise<FusePermissionGrantResult<TSupportedPermission>> {
-        let response: FuseAPIResponse = await this.$api(ContentType.JSON, {
+        const response: FuseAPIResponse = await this.$api(ContentType.JSON, {
             permissionSet: this.getPermissionSet(),
             isJustified: isJustified
         });

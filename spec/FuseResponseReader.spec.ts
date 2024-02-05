@@ -22,7 +22,7 @@ describe('FuseResponseReader', () => {
     let buffer: ArrayBuffer;
 
     beforeAll(async () => {
-        let reader: FileReader = new FileReader();
+        const reader: FileReader = new FileReader();
 
         return await new Promise<void>((resolve, reject) => {
             reader.onload = () => {
@@ -39,12 +39,12 @@ describe('FuseResponseReader', () => {
     });
 
     it('can read buffer as text', async () => {
-        let result: string = await FuseResponseReader.readAsText(buffer);
+        const result: string = await FuseResponseReader.readAsText(buffer);
         expect(result).toBe(SAMPLE);
     });
 
     it('can read as JSON', async () => {
-        let result: Record<string, any> = await FuseResponseReader.readAsJSON(buffer);
+        const result: Record<string, unknown> = await FuseResponseReader.readAsJSON(buffer);
         expect(result).toEqual({
             test: 123
         });

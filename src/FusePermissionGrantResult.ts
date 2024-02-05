@@ -31,7 +31,7 @@ export class FusePermissionGrantResult<TSupportedPermission extends number = num
     }
 
     public isAllGranted(): boolean {
-        for (let i in this.$results) {
+        for (const i in this.$results) {
             if (this.$results[i] !== FusePermissionState.GRANTED) {
                 return false;
             }
@@ -41,7 +41,7 @@ export class FusePermissionGrantResult<TSupportedPermission extends number = num
     }
 
     public rejectJustifications(): void {
-        for (let i in this.$results) {
+        for (const i in this.$results) {
             if (this.$results[i] === FusePermissionState.REQUIRES_JUSTIFICATION) {
                 this.$results[i] = FusePermissionState.DENIED;
             }
@@ -49,7 +49,7 @@ export class FusePermissionGrantResult<TSupportedPermission extends number = num
     }
 
     public shouldJustify(): boolean {
-        for (let i in this.$results) {
+        for (const i in this.$results) {
             if (this.$results[i] === FusePermissionState.REQUIRES_JUSTIFICATION) {
                 return true;
             }

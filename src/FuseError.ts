@@ -45,10 +45,10 @@ export class FuseError extends Error implements ISerializable {
     private $code: number;
 
     /**
-     * @param domain The error domain, usually represents a library, class, or plugin.
-     * @param message The error message
-     * @param cause The underlying cause of the error. May be null.
-     * @param code An error code. May be null.
+     * @param domain - The error domain, usually represents a library, class, or plugin.
+     * @param message - The error message
+     * @param cause - The underlying cause of the error. May be null.
+     * @param code - An error code. May be null.
      */
     public constructor(domain: string, message: string, cause?: TFuseErrorCause, code?: number) {
         super(message);
@@ -120,7 +120,7 @@ export class FuseError extends Error implements ISerializable {
      * printed and a "FuseError" domain error will be returned stating the error
      * is not wrappable.
      * 
-     * @param error A value that can represent an error
+     * @param error - A value that can represent an error
      * @returns A FuseError instance
      */
     public static wrap(error: string | Error | FuseError | IFuseErrorSerialized | unknown): FuseError {
@@ -148,7 +148,7 @@ export class FuseError extends Error implements ISerializable {
     /**
      * Deserializes and creates a new FuseError instance
      * 
-     * @param error The serialized error object
+     * @param error - The serialized error object
      * @returns A FuseError instance
      */
     public static fromSerialized(error: IFuseErrorSerialized): FuseError {
@@ -159,6 +159,7 @@ export class FuseError extends Error implements ISerializable {
         return 'FuseError';
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     private static $isSerializedFuseError(error: any): error is IFuseErrorSerialized {
         return 'message' in error && 'domain' in error && 'code' in error;
     }

@@ -56,7 +56,7 @@ export class FuseContextBuilder {
     }
 
     public async build(): Promise<FuseContext> {
-        let platform: Platform = this.$platformResolver.resolve();
+        const platform: Platform = this.$platformResolver.resolve();
 
         let apiFactory: AbstractFuseAPIFactory;
         if (this.$apiFactory) {
@@ -74,10 +74,10 @@ export class FuseContextBuilder {
             loggerFactory = new FuseLoggerFactory(platform);
         }
 
-        let context: FuseContext = new FuseContext(platform, apiFactory, loggerFactory);
+        const context: FuseContext = new FuseContext(platform, apiFactory, loggerFactory);
 
-        let isDebugMode: boolean = await this._isDebugMode(context);
-        let logger: IFuseLogger = context.getLogger();
+        const isDebugMode: boolean = await this._isDebugMode(context);
+        const logger: IFuseLogger = context.getLogger();
         logger.enableNativeBridge(isDebugMode);
         let level: FuseLoggerLevel = logger.getLevel();
         level |= FuseLoggerLevel.DEBUG;

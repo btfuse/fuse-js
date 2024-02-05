@@ -48,7 +48,7 @@ export class FuseLoggerSerializer {
     }
 
     protected _serializeErrorToString(obj: Error): string {
-        let serializedError = {
+        const serializedError = {
             name: obj.name,
             message: obj.message,
             stack: obj.stack
@@ -87,6 +87,7 @@ export class FuseLoggerSerializer {
         return out;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     protected _isISerializable(x: any): x is ISerializable {
         return !!x.serialize && typeof x.serialize === 'function';
     }
@@ -153,8 +154,8 @@ export class FuseLogger implements IFuseLogger {
     }
 
     /**
-     * @param level The log level for this log print
-     * @param message Overridable hook to send logs to the native environment
+     * @param level - The log level for this log print
+     * @param message - Overridable hook to send logs to the native environment
      */
     protected _logToNative(level: FuseLoggerLevel, message: string): void {}
 
@@ -163,7 +164,7 @@ export class FuseLogger implements IFuseLogger {
             return;
         }
 
-        let serializedArgs: string[] = [];
+        const serializedArgs: string[] = [];
 
         for (let i: number = 0; i < args.length; i++) {
             serializedArgs.push(this.$serializer.serialize(args[i]));

@@ -40,11 +40,11 @@ export class Version {
      * If any dot notation segment is missing or is not parseable as an integer,
      * it will default to 0.
      * 
-     * @param version Semver formatted version string
+     * @param version - Semver formatted version string
      * @returns A version object
      */
     public static parseVersionString(version: string): Version {
-        let parts: string[] = version.split('.');
+        const parts: string[] = version.split('.');
 
         let major: number = parseInt(parts[0]);
         let minor: number = parseInt(parts[1]);
@@ -99,7 +99,7 @@ export class Version {
 
     /**
      * @sealed
-     * @param b The right side version
+     * @param b - The right side version
      * @remarks
      *  This is the equivilant in using `Version.compare(this, b)`.
      *  See {@link copmare} for more details.
@@ -114,8 +114,8 @@ export class Version {
      * {@link GREATER_THAN} is returned. If they are equal, {@link EQUAL} is returned.
      * Otherwise, {@link LESS_THAN} is returned.
      * 
-     * @param lhs The left side version
-     * @param rhs The right side version
+     * @param lhs - The left side version
+     * @param rhs - The right side version
      * @returns 
      */
     public static compare(lhs: Version, rhs: Version): number {

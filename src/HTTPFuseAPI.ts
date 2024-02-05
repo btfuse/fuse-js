@@ -29,15 +29,15 @@ export class HTTPFuseAPI extends FuseAPI {
         return '';
     }
 
-    protected async _initHeaders(xhr: XMLHttpRequest): Promise<void> {};
+    protected async _initHeaders(xhr: XMLHttpRequest): Promise<void> {}
 
     public async buildRoute(pluginID: string, method: string): Promise<string> {
-        let endpoint: string = await this._getEndpoint();
+        const endpoint: string = await this._getEndpoint();
         return `${endpoint}${this._createRoute(pluginID, method)}`;
     }
 
     protected override async _execute(pluginID: string, method: string, contentType: string, data: Blob): Promise<FuseAPIResponse> {
-        let xhr: XMLHttpRequest = new XMLHttpRequest();
+        const xhr: XMLHttpRequest = new XMLHttpRequest();
         xhr.responseType = 'arraybuffer';
         xhr.open('POST', await this.buildRoute(pluginID, method));
         
@@ -56,7 +56,7 @@ export class HTTPFuseAPI extends FuseAPI {
     protected _doRequest(xhr: XMLHttpRequest, data: Blob): Promise<FuseAPIResponse> {
         return new Promise<FuseAPIResponse>((resolve, reject) => {
             xhr.onload = async () => {
-                let response: FuseAPIResponse = new FuseAPIResponse(xhr.response, xhr.getAllResponseHeaders(), xhr.status);
+                const response: FuseAPIResponse = new FuseAPIResponse(xhr.response, xhr.getAllResponseHeaders(), xhr.status);
                 if (response.isError()) {
                     reject(await response.readAsError());
                 }

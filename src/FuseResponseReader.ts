@@ -26,12 +26,12 @@ export class FuseResponseReader {
      * @remarks
      * Reads the data buffer as a string
      * 
-     * @param data input data
+     * @param data - input data
      * @returns The buffer contents as a string
      */
     public static async readAsText(data: ArrayBuffer): Promise<string> {
         return await new Promise<string>((resolve, reject) => {
-            let reader: FileReader = new FileReader();
+            const reader: FileReader = new FileReader();
             reader.onload = () => {
                 resolve(<string>reader.result);
             };
@@ -48,14 +48,14 @@ export class FuseResponseReader {
      * can be typed as T generic. No validations occurs on whether the given
      * data is actually a type of T.
      * 
-     * @throws {SyntaxError}
+     * @throws {@link SyntaxError}
      * If data is not parseable as JSON.
      * 
-     * @param data input data
+     * @param data - input data
      * @returns The buffer contents as a JSON object.
      */
     public static async readAsJSON<T>(data: ArrayBuffer): Promise<T> {
-        let str: string = await this.readAsText(data);
+        const str: string = await this.readAsText(data);
         return JSON.parse(str);
     }
 }

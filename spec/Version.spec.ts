@@ -21,33 +21,33 @@ describe('Version', () => {
     const lhs: Version = new Version(1, 2, 3);
 
     it('should be equal (static)', () => {
-        let rhs: Version = new Version(1, 2, 3);
+        const rhs: Version = new Version(1, 2, 3);
         expect(Version.compare(lhs, rhs)).toEqual(Version.EQUAL);
     });
 
     it('instance compare should call on static compare', () => {
-        let rhs: Version = new Version(1, 2, 3);
+        const rhs: Version = new Version(1, 2, 3);
         jest.spyOn(Version, 'compare');
         lhs.compare(rhs);
         expect(Version.compare).toHaveBeenCalledWith(lhs, rhs);
     });
 
     it('Can create from string', () => {
-        let v: Version = Version.parseVersionString('12.3.45');
+        const v: Version = Version.parseVersionString('12.3.45');
         expect(v.getMajor()).toBe(12);
         expect(v.getMinor()).toBe(3);
         expect(v.getPatch()).toBe(45);
     });
 
     it('can create version from string with no patch', () => {
-        let v: Version = Version.parseVersionString('12.3');
+        const v: Version = Version.parseVersionString('12.3');
         expect(v.getMajor()).toBe(12);
         expect(v.getMinor()).toBe(3);
         expect(v.getPatch()).toBe(0);
     });
 
     it('can create version from string with no minor', () => {
-        let v: Version = Version.parseVersionString('12');
+        const v: Version = Version.parseVersionString('12');
         expect(v.getMajor()).toBe(12);
         expect(v.getMinor()).toBe(0);
         expect(v.getPatch()).toBe(0);
@@ -57,7 +57,7 @@ describe('Version', () => {
         expect(lhs.toString()).toBe('1.2.3');
     });
 
-    let vtests: Record<string, number> = {
+    const vtests: Record<string, number> = {
         '0.9.9': Version.GREATER_THAN,
         '1.0.0': Version.GREATER_THAN,
         '1.1.0': Version.GREATER_THAN,
@@ -68,8 +68,8 @@ describe('Version', () => {
         '2.0.0': Version.LESS_THAN
     };
 
-    for (let i in vtests) {
-        let v: Version = Version.parseVersionString(i);
+    for (const i in vtests) {
+        const v: Version = Version.parseVersionString(i);
         let label: string;
         switch (vtests[i]) {
             case Version.LESS_THAN:

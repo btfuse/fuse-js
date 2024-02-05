@@ -79,7 +79,7 @@ describe('Public API', () => {
         });
 
         it('TFuseAPICallbackHandler', () => {
-            let test: api.TFuseAPICallbackHandler = null;
+            const test: api.TFuseAPICallbackHandler = null;
         });
     });
 
@@ -89,15 +89,15 @@ describe('Public API', () => {
         });
     
         it('TFuseAPICallbackHandler', () => {
-            let test: api.TFuseAPICallbackHandler = null;
+            const test: api.TFuseAPICallbackHandler = null;
         });
     
         it('IFuseAPICallPacket', () => {
-            let test: api.IFuseAPICallPacket = null;
+            const test: api.IFuseAPICallPacket = null;
         });
     
         it('TFuseAPIResponseData', () => {
-            let test: api.TFuseAPIResponseData = null;
+            const test: api.TFuseAPIResponseData = null;
         });
     });
 
@@ -149,15 +149,15 @@ describe('Public API', () => {
         });
 
         it('TFuseAPIPermissionRequest', () => {
-            let test: api.TFuseAPIPermissionRequest = null;
+            const test: api.TFuseAPIPermissionRequest = null;
         });
 
         it('TFuseJustificationHandler', () => {
-            let test: api.TFuseJustificationHandler = null;
+            const test: api.TFuseJustificationHandler = null;
         });
 
         it('TFusePermissionRequestArguments', () => {
-            let test: api.TFusePermissionRequestArguments<number> = null;
+            const test: api.TFusePermissionRequestArguments<number> = null;
         });
     });
 
@@ -171,7 +171,7 @@ describe('Public API', () => {
         });
 
         it('TAPIBridgeFunction', () => {
-            let test: api.TAPIBridgeFunction = null;
+            const test: api.TAPIBridgeFunction = null;
         });
     });
 
@@ -188,23 +188,23 @@ describe('Public API', () => {
     });
 
     it('IFuseGrantResult', () => {
-        let test: api.IFuseGrantResult<number> = null;
+        const test: api.IFuseGrantResult<number> = null;
     });
 
     it('IFuseLogger', () => {
-        let test: api.IFuseLogger = null;
+        const test: api.IFuseLogger = null;
     });
 
     it('INativeLogEntry', () => {
-        let test: api.INativeLogEntry = null;
+        const test: api.INativeLogEntry = null;
     });
 
     it('IFusePermissionRequest', () => {
-        let test: api.IFusePermissionRequest = null;
+        const test: api.IFusePermissionRequest = null;
     });
 
     it('ISerializable', () => {
-        let test: api.ISerializable = null; 
+        const test: api.ISerializable = null; 
     });
 
     it('Platform', () => {
@@ -217,11 +217,11 @@ describe('Public API', () => {
 
     describe('TSerializable', () => {
         it('TSerializable', () => {
-            let test: api.TSerializable = null;
+            const test: api.TSerializable = null;
         });
     
         it('TFuseSerializable', () => {
-            let test: api.TFuseSerializable<number> = null;
+            const test: api.TFuseSerializable<number> = null;
         });
     });
 

@@ -74,7 +74,7 @@ export class FuseContext {
 
     public async getPlatformVersion(): Promise<Version> {
         if (!this.$runtimeVersion) {
-            let info: IRuntimeInfo = await this.$getRuntimeInfo();
+            const info: IRuntimeInfo = await this.$getRuntimeInfo();
             this.$runtimeVersion = Version.parseVersionString(info.version);
         }
         
@@ -82,7 +82,7 @@ export class FuseContext {
     }
 
     public async isDebugMode(): Promise<boolean> {
-        let info: IRuntimeInfo = await this.$getRuntimeInfo();
+        const info: IRuntimeInfo = await this.$getRuntimeInfo();
         return info.debugMode;
     }
 

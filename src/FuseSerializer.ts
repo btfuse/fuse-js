@@ -48,7 +48,7 @@ export class FuseSerializer {
     }
 
     protected _serializeErrorToString(obj: Error): string {
-        let serializedError = {
+        const serializedError = {
             name: obj.name,
             message: obj.message,
             stack: obj.stack
@@ -64,7 +64,7 @@ export class FuseSerializer {
     /**
      * Serializes the given object into a blob.
      * 
-     * @param obj A supported serializable object. See {@link TSerializable} for
+     * @param obj - A supported serializable object. See {@link TSerializable} for
      * a list of currently supported types
      * @returns A serialized blob
      */
@@ -94,6 +94,7 @@ export class FuseSerializer {
         return bin;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     protected _isISerializable(x: any): x is ISerializable {
         return !!x.serialize && typeof x.serialize === 'function';
     }

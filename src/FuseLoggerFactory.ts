@@ -29,7 +29,7 @@ export class FuseLoggerFactory {
 
     /**
      * 
-     * @param platform The current Platform in this runtime environment
+     * @param platform - The current Platform in this runtime environment
      */
     public constructor(platform: Platform) {
         this.$platform = platform;
@@ -38,7 +38,7 @@ export class FuseLoggerFactory {
     /**
      * Creates a FuseLogger for the current Platform.
      * 
-     * @returns {IFuseLogger}
+     * @returns A logger instance   
      */
     public create(): IFuseLogger {
         switch (this.$platform) {

@@ -41,12 +41,12 @@ export class FuseRuntime extends FusePlugin {
     }
     
     public async getInfo(): Promise<IRuntimeInfo> {
-        let data: FuseAPIResponse = await this._exec('/info');
+        const data: FuseAPIResponse = await this._exec('/info');
         return await data.readAsJSON();
     }
 
     public async registerPauseHandler(cb: TPauseCallbackHandler): Promise<string> {
-        let cbID: string = this._createCallback((payload: string) => {
+        const cbID: string = this._createCallback((payload: string) => {
             cb();
         });
 
@@ -61,7 +61,7 @@ export class FuseRuntime extends FusePlugin {
     }
 
     public async registerResumeHandler(cb: TResumeCallbackHandler): Promise<string> {
-        let cbID: string = this._createCallback((payload: string) => {
+        const cbID: string = this._createCallback((payload: string) => {
             cb();
         });
 

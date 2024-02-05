@@ -27,7 +27,7 @@ describe('FuseSerializer', () => {
         // polyfill the text API
         Blob.prototype.text = function(): Promise<string> {
             return new Promise<string>((resolve, reject) => {
-                let reader: FileReader = new FileReader();
+                const reader: FileReader = new FileReader();
                 reader.onload = () => {
                     resolve(<string>reader.result);
                 };
@@ -79,20 +79,20 @@ describe('FuseSerializer', () => {
             }
         }
         
-        let obj: MyObject = new MyObject(2, 3);
+        const obj: MyObject = new MyObject(2, 3);
 
         output = serializer.serialize(obj);
         expect(await output.text()).toBe('2, 3');
     });
 
     it('can serialize array of TSerializable', async () => {
-        let x: TSerializable[] = ['test', 123, true];
+        const x: TSerializable[] = ['test', 123, true];
         output = serializer.serialize(x);
         expect(await output.text()).toBe('["test",123,true]');
     });
 
     it('can serialize object of TSerializable', async () => {
-        let x: TSerializable = {
+        const x: TSerializable = {
             t1: 'test',
             t2: 123,
             t3: true
@@ -106,11 +106,11 @@ describe('FuseSerializer', () => {
             t1: string;
             t2: number;
             t3: boolean;
-        };
+        }
 
         type MyInterface = TFuseSerializable<__MyInterface>;
 
-        let x: MyInterface = {
+        const x: MyInterface = {
             t1: 'test',
             t2: 123,
             t3: true

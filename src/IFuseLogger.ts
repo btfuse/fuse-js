@@ -28,7 +28,7 @@ export interface IFuseLogger {
      * If enabled, log calls will also be sent to the native environment and logged in the native
      * syslog.
      * 
-     * @param flag 
+     * @param flag - Implementors shall enable bridge logging if true
      */
     enableNativeBridge: (flag: boolean) => void;
 
@@ -41,7 +41,7 @@ export interface IFuseLogger {
      * To remove a bit, you can use getLevel() to get the current mask and use &= operator along with the bit NOT (~) operator.
      * e.g: mask &= INFO; // Remove INFO from log outputs
      * 
-     * @param level 
+     * @param level - The verbosity level
      */
     setLevel: (level: FuseLoggerLevel) => void;
 
@@ -54,28 +54,28 @@ export interface IFuseLogger {
 
     /**
      * Prints debug style logs
-     * @param args 
+     * @param args - log arguments
      * @returns 
      */
     debug: (...args: TSerializable[]) => void;
 
     /**
      * Prints info style logs
-     * @param args 
+     * @param args - log arguments
      * @returns 
      */
     info: (...args: TSerializable[]) => void;
 
     /**
      * Prints warn style logs
-     * @param args 
+     * @param args - log arguments
      * @returns 
      */
     warn: (...args: TSerializable[]) => void;
 
     /**
      * Prints error style logs
-     * @param args 
+     * @param args - log arguments
      * @returns 
      */
     error: (...args: TSerializable[]) => void;

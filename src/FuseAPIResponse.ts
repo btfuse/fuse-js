@@ -34,7 +34,7 @@ export class FuseAPIResponse {
     }
 
     public getContentLength(): number {
-        let lenStr: string = this.$headers.get('content-type')?.[0];
+        const lenStr: string = this.$headers.get('content-type')?.[0];
         let length: number = parseInt(lenStr);
         if (isNaN(length)) {
             length = 0;
@@ -63,7 +63,7 @@ export class FuseAPIResponse {
     }
 
     public async readAsError(): Promise<FuseError> {
-        let serializedError: IFuseErrorSerialized = await FuseResponseReader.readAsJSON(this.$content);
+        const serializedError: IFuseErrorSerialized = await FuseResponseReader.readAsJSON(this.$content);
         return FuseError.fromSerialized(serializedError);
     }
 
@@ -76,21 +76,21 @@ export class FuseAPIResponse {
     }
 
     private $parseHeaders(headers: string | null): Map<string, string[]> {
-        let map: Map<string, string[]> = new Map();
+        const map: Map<string, string[]> = new Map();
 
         if (!headers) {
             return map;
         }
 
-        let lines: string[] = headers.split('\r\n');
+        const lines: string[] = headers.split('\r\n');
         for (let i: number = 0; i < lines.length; i++) {
-            let line: string[] = lines[i].split(':');
-            let key: string = line[0];
+            const line: string[] = lines[i].split(':');
+            const key: string = line[0];
             if (!map.has(key)) {
                 map.set(key, []);
             }
 
-            let headerValue: string[] = map.get(key);
+            const headerValue: string[] = map.get(key);
             headerValue.push(line[1]);
         }
 

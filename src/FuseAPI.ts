@@ -57,9 +57,9 @@ export abstract class FuseAPI {
     /**
      * Override to implement execute native bridge logic
      * 
-     * @param pluginID 
-     * @param method 
-     * @param args 
+     * @param pluginID - The plugin ID
+     * @param method - API method
+     * @param args - API arguments 
      */
     protected abstract _execute(pluginID: string, method: string, contentType: string, args: Blob): Promise<FuseAPIResponse>;
 

@@ -41,7 +41,7 @@ export abstract class FusePlugin<TAPIOpts = unknown> {
 
     /**
      * Creates the API bridge
-     * @param platform
+     * @param platform - The runtime platform
      * @returns 
      */
     protected _createAPI(platform: Platform): FuseAPI {
@@ -77,7 +77,7 @@ export abstract class FusePlugin<TAPIOpts = unknown> {
      * This API may be overridden by subclasses to utilise the given options.
      * The default implementation is to simply return a standard FuseAPI.
      * 
-     * @param opts 
+     * @param opts - API options
      * @returns 
      */
     protected _getAPI(opts?: TAPIOpts): FuseAPI {
@@ -106,7 +106,7 @@ export abstract class FusePlugin<TAPIOpts = unknown> {
      * 
      * Note that callback data payloads only supports strings.
      * 
-     * @param cb 
+     * @param cb - The callback function 
      * @returns String - callbackID
      */
     protected _createCallback(cb: TFuseAPICallbackHandler, apiOpts?: TAPIOpts): string {
@@ -116,7 +116,7 @@ export abstract class FusePlugin<TAPIOpts = unknown> {
     /**
      * Releases a created callback.
      * 
-     * @param id callbackID
+     * @param id - callbackID
      */
     protected _releaseCallback(id: string, apiOpts?: TAPIOpts): void {
         this._getAPI(apiOpts).releaseCallback(id);
@@ -140,7 +140,6 @@ export abstract class FusePlugin<TAPIOpts = unknown> {
      *  - Numbers
      *  - dots and hyphens
      * 
-     * @abstract
      * @virtual
      */
     protected abstract _getID(): string;
@@ -157,10 +156,10 @@ export abstract class FusePlugin<TAPIOpts = unknown> {
      * 
      * The concrete class should expose public methods with type information exposed.
      * 
-     * @param method The method link, this should match the endpoint defined in the native API.
-     * @param contentType the MIME type of the data you are passing in.
+     * @param method - The method link, this should match the endpoint defined in the native API.
+     * @param contentType - the MIME type of the data you are passing in.
      * @param data - The data to pass to the native environment
-     * @returns {ArrayBuffer} The response body from native. FuseResponseReader has some utility methods to read the data in common formats (e.g. text or JSON)
+     * @returns The response body from native. FuseResponseReader has some utility methods to read the data in common formats (e.g. text or JSON)
      */
     protected async _exec(method: string, contentType?: string, data?: TSerializable, apiOpts?: TAPIOpts): Promise<FuseAPIResponse> {
         return await this._getAPI(apiOpts).execute(this.getID(), method, contentType, data);
@@ -174,8 +173,8 @@ export abstract class FusePlugin<TAPIOpts = unknown> {
      * asynchronously.
      * 
      * @sealed
-     * @param route The API end point
-     * @param serializer The serializer to use. Defaults to {@link FuseSerializer} which is a sensible serializer.
+     * @param route - The API end point
+     * @param serializer - The serializer to use. Defaults to {@link FuseSerializer} which is a sensible serializer.
      * @returns A context-binding function that can be given to another object.
      */
     protected _createAPIBridge(route: string, serializer?: FuseSerializer): TAPIBridgeFunction {
