@@ -22,6 +22,10 @@ import {TSerializable} from './TSerializable';
 import {ISerializable} from './ISerializable';
 import { FuseLoggerLevel } from './FuseLoggerLevel';
 
+/**
+ * A serializer for logging. This is different than a {@link FuseSerializer} in
+ * that in serializer transforms objects into a printable string representation.
+ */
 export class FuseLoggerSerializer {
     public constructor() {}
 
@@ -61,6 +65,13 @@ export class FuseLoggerSerializer {
         return obj.toISOString();
     }
 
+    /**
+     * @remarks
+     * Serializes an object into a printable string.
+     * 
+     * @param obj - The object to serialize
+     * @returns A printable string
+     */
     public serialize(obj: TSerializable): string {
         if (obj === null || obj === undefined) {
             return null;
@@ -116,14 +127,45 @@ export class FuseLogger implements IFuseLogger {
 
     protected _registerNativeCalblack(): void {}
 
-    public setLevel(level: FuseLoggerLevel): void {
+    /**
+     * 
+     * @param level - A bitmask option to indicate which levels to log.
+     * 
+     * @example
+     * To report on WARN and ERROR only, you would set:
+     * 
+     * ```typescript
+     * logger.setLevel(FuseLoggerLevel.WARN | FuseLoggerLevel.ERROR);
+     * ```
+     */
+    public setLevel(level: number): void {
         this.$level = level;
     }
 
-    public getLevel(): FuseLoggerLevel {
+    /**
+     * 
+     * @returns The current log level bitmask.
+     */
+    public getLevel(): number {
         return this.$level;
     }
 
+    /**
+     * @remarks
+     * If enabled, The native FuseLogger will pass native log messages to
+     * the webview and will be logged into the JS console. Logs passed through
+     * this logger will also be passed to the native environment and will be
+     * logged in the native's logging console.
+     * 
+     * This can be helpful in debugging where all logs will be in the same place,
+     * however, logging can be verbose and can cause a degration of performance,
+     * therefore it may not be desirable to have enabled for production builds.
+     * 
+     * This feature is currently enabled by default, however this is subject to
+     * change.
+     * 
+     * @param flag - enables the native bridge logging if enabled.
+     */
     public enableNativeBridge(flag: boolean): void {
         this.$enableNativeBridge = !!flag;
     }
@@ -154,6 +196,7 @@ export class FuseLogger implements IFuseLogger {
     }
 
     /**
+     * @virtual - Implementators use this method to call on the native logging API.
      * @param level - The log level for this log print
      * @param message - Overridable hook to send logs to the native environment
      */
@@ -173,6 +216,9 @@ export class FuseLogger implements IFuseLogger {
         this._logToNative(level, serializedArgs.join('\t'));
     }
 
+    /**
+     * @param args - variadic arguments of serializable objects to log to the console
+     */
     public debug(...args: TSerializable[]): void {
         if (!(this.$level & FuseLoggerLevel.DEBUG)) {
             return;
@@ -182,6 +228,9 @@ export class FuseLogger implements IFuseLogger {
         this.$logToNative(FuseLoggerLevel.DEBUG, args);
     }
 
+    /**
+     * @param args - variadic arguments of serializable objects to log to the console
+     */
     public info(...args: TSerializable[]): void {
         if (!(this.$level & FuseLoggerLevel.INFO)) {
             return;
@@ -191,6 +240,9 @@ export class FuseLogger implements IFuseLogger {
         this.$logToNative(FuseLoggerLevel.INFO, args);
     }
 
+    /**
+     * @param args - variadic arguments of serializable objects to log to the console
+     */
     public warn(...args: TSerializable[]): void {
         if (!(this.$level & FuseLoggerLevel.WARN)) {
             return;
@@ -200,6 +252,9 @@ export class FuseLogger implements IFuseLogger {
         this.$logToNative(FuseLoggerLevel.WARN, args);
     }
 
+    /**
+     * @param args - variadic arguments of serializable objects to log to the console
+     */
     public error(...args: TSerializable[]): void {
         if (!(this.$level & FuseLoggerLevel.ERROR)) {
             return;
