@@ -15,6 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * A bitmask option of logger levels
+ */
 export enum FuseLoggerLevel {
     SILENT  = 0,
     DEBUG   = 1,

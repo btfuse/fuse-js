@@ -15,6 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * A class that represents a {@link https://semver.org/} versioning.
+ */
 export class Version {
     private $major: number;
     private $minor: number;
@@ -30,6 +33,16 @@ export class Version {
         this.$patch = patch || 0;
     }
 
+    /**
+     * @remarks
+     * Parses a semver-formatted version string and creates a Version object.
+     * Does not support pre-release labels, which will be chopped off.
+     * If any dot notation segment is missing or is not parseable as an integer,
+     * it will default to 0.
+     * 
+     * @param version Semver formatted version string
+     * @returns A version object
+     */
     public static parseVersionString(version: string): Version {
         let parts: string[] = version.split('.');
 
@@ -52,27 +65,59 @@ export class Version {
         return new Version(major, minor, patch);
     }
 
+    /**
+     * @sealed
+     * @returns The major component of this version
+     */
     public getMajor(): number {
         return this.$major;
     }
 
+    /**
+     * @sealed
+     * @returns The minor component of this version
+     */
     public getMinor(): number {
         return this.$minor;
     }
 
+    /**
+     * @sealed
+     * @returns The patch component of this version
+     */
     public getPatch(): number {
         return this.$patch;
     }
 
+    /**
+     * @sealed
+     * @returns A semver-formatted string
+     */
     public toString(): string {
         return `${this.$major}.${this.$minor}.${this.$patch}`;
     }
 
-    
+    /**
+     * @sealed
+     * @param b The right side version
+     * @remarks
+     *  This is the equivilant in using `Version.compare(this, b)`.
+     *  See {@link copmare} for more details.
+     */
     public compare(b: Version): number {
         return Version.compare(this, b);
     }
 
+    /**
+     * @remarks
+     * Compares this version with another. If left side is greater than right side,
+     * {@link GREATER_THAN} is returned. If they are equal, {@link EQUAL} is returned.
+     * Otherwise, {@link LESS_THAN} is returned.
+     * 
+     * @param lhs The left side version
+     * @param rhs The right side version
+     * @returns 
+     */
     public static compare(lhs: Version, rhs: Version): number {
         if (lhs.$major === rhs.$major && lhs.$minor === rhs.$minor && lhs.$patch === rhs.$patch) {
             return Version.EQUAL;

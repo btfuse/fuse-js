@@ -19,8 +19,23 @@ import {ISerializable} from './ISerializable';
 
 /**
  * Type of supported serializable obejcts that can go over the Fuse API bridge.
+ * 
+ * Currently the supported types are:
+ *  - Error
+ *  - Blob
+ *  - ArrayBuffer
+ *  - Primitives (string, number, boolean)
+ *  - Date
+ *  - Any object or array consisting exclusively of the above types
  */
-export type TSerializable = Error | string | Blob | ArrayBuffer| ISerializable<any> | number | boolean | Date | TSerializable[] | {[key: string]: TSerializable };
+export type TSerializable = Error |
+                            string |
+                            Blob |
+                            ArrayBuffer |
+                            ISerializable<any> |
+                            number |
+                            boolean |
+                            Date | TSerializable[] | {[key: string]: TSerializable };
 
 /**
  * Utility type wrap, useful if you have a concrete interface of TSerializable properties.

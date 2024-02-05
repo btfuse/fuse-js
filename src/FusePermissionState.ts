@@ -15,6 +15,9 @@ See the License for the specific language governing permissions and
 limitations under the License.
 */
 
+/**
+ * A set of constants representing permission states.
+ */
 export enum FusePermissionState {
     GRANTED,
     REQUIRES_JUSTIFICATION,

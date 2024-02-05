@@ -17,8 +17,14 @@ limitations under the License.
 
 import { IFuseLogger } from "./IFuseLogger";
 
+/**
+ * An FuseLogger factory for creating logging instances.
+ */
 export abstract class AbstractFuseLoggerFactory {
     public constructor() {}
 
+    /**
+     * Implement to create a FuseLogger
+     */
     public abstract create(): IFuseLogger;
 }

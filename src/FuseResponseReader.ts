@@ -22,6 +22,13 @@ limitations under the License.
 export class FuseResponseReader {
     private constructor() {}
 
+    /**
+     * @remarks
+     * Reads the data buffer as a string
+     * 
+     * @param data input data
+     * @returns The buffer contents as a string
+     */
     public static async readAsText(data: ArrayBuffer): Promise<string> {
         return await new Promise<string>((resolve, reject) => {
             let reader: FileReader = new FileReader();
@@ -35,6 +42,18 @@ export class FuseResponseReader {
         });
     }
 
+    /**
+     * @remarks
+     * Reads the given data buffer as a JSON object. The JSON object
+     * can be typed as T generic. No validations occurs on whether the given
+     * data is actually a type of T.
+     * 
+     * @throws {SyntaxError}
+     * If data is not parseable as JSON.
+     * 
+     * @param data input data
+     * @returns The buffer contents as a JSON object.
+     */
     public static async readAsJSON<T>(data: ArrayBuffer): Promise<T> {
         let str: string = await this.readAsText(data);
         return JSON.parse(str);

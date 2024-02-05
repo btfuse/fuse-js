@@ -18,6 +18,10 @@ limitations under the License.
 import { ISerializable } from "./ISerializable";
 import { TSerializable } from "./TSerializable";
 
+/**
+ * A class to serialize several different types of objects into a data structure
+ * that can be reconstructed across the Fuse API bridge.
+ */
 export class FuseSerializer {
     public constructor() {}
 
@@ -57,6 +61,13 @@ export class FuseSerializer {
         return obj.toISOString();
     }
 
+    /**
+     * Serializes the given object into a blob.
+     * 
+     * @param obj A supported serializable object. See {@link TSerializable} for
+     * a list of currently supported types
+     * @returns A serialized blob
+     */
     public serialize(obj: TSerializable): Blob {
         if (obj === null || obj === undefined) {
             return null;

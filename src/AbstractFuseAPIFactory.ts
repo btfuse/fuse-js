@@ -22,5 +22,11 @@ import { Platform } from './Platform';
  * An factory class that defines the base signature for creating a FuseAPI bridge object.
  */
 export abstract class AbstractFuseAPIFactory {
+
+    /**
+     * Implement a create API that returns a FuseAPI for the given Platform
+     * 
+     * @param platform 
+     */
     public abstract create(platform: Platform): FuseAPI;
 }

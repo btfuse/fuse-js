@@ -41,17 +41,31 @@ export abstract class FusePlugin<TAPIOpts = unknown> {
 
     /**
      * Creates the API bridge
-     * @param platform 
+     * @param platform
      * @returns 
      */
     protected _createAPI(platform: Platform): FuseAPI {
         return this._getAPIFactory().create(platform);
     }
 
+    /**
+     * @virtual
+     * 
+     * @remarks
+     * 
+     * Create a concrete {@link FuseAPI} factory capable of creating FuseAPI
+     * instance for the current runtime.
+     * 
+     * @returns A concrete {@link FuseAPI} Factory
+     */
     protected _createAPIFactory(): AbstractFuseAPIFactory {
         return null;
     }
 
+    /**
+     * 
+     * @returns The concrete API factory
+     */
     protected _getAPIFactory(): AbstractFuseAPIFactory {
         return this.$apiFactory;
     }
@@ -111,13 +125,14 @@ export abstract class FusePlugin<TAPIOpts = unknown> {
     /**
      * Returns the FuseContext
      * 
-     * @returns 
+     * @returns The current context
      */
     public getContext(): FuseContext {
         return this.$context;
     }
 
     /**
+     * @remarks
      * 
      * Concrete classes should implement and return a string that uniquely represents this plugin.
      * The string must conform to URL fragment rules. It shall only contain the following characters:
@@ -126,6 +141,7 @@ export abstract class FusePlugin<TAPIOpts = unknown> {
      *  - dots and hyphens
      * 
      * @abstract
+     * @virtual
      */
     protected abstract _getID(): string;
 
@@ -150,6 +166,18 @@ export abstract class FusePlugin<TAPIOpts = unknown> {
         return await this._getAPI(apiOpts).execute(this.getID(), method, contentType, data);
     }
 
+    /**
+     * @remarks
+     * This is useful when you want to use an API as a callback, without exposing
+     * the plugin implementation. The returned function is a bounded function.
+     * When invoked, it will call on the API endpoint and returns a {@link FuseAPIResponse}
+     * asynchronously.
+     * 
+     * @sealed
+     * @param route The API end point
+     * @param serializer The serializer to use. Defaults to {@link FuseSerializer} which is a sensible serializer.
+     * @returns A context-binding function that can be given to another object.
+     */
     protected _createAPIBridge(route: string, serializer?: FuseSerializer): TAPIBridgeFunction {
         if (!serializer) {
             serializer = new FuseSerializer();

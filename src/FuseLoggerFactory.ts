@@ -21,13 +21,25 @@ import { Platform } from "./Platform";
 import {IOSFuseLogger} from './ios/IOSFuseLogger';
 import {AndroidFuseLogger} from './android/AndroidFuseLogger';
 
+/**
+ * A default logger factory for creating loggers for the given platform.
+ */
 export class FuseLoggerFactory {
     private $platform: Platform;
 
+    /**
+     * 
+     * @param platform The current Platform in this runtime environment
+     */
     public constructor(platform: Platform) {
         this.$platform = platform;
     }
 
+    /**
+     * Creates a FuseLogger for the current Platform.
+     * 
+     * @returns {IFuseLogger}
+     */
     public create(): IFuseLogger {
         switch (this.$platform) {
             case Platform.IOS:
